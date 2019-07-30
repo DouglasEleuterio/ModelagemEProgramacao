@@ -20,7 +20,7 @@ Sistema de Pedidos implementado para atender os requisitos aprensentados no Curs
 ## Arquitetura da Aplicação.
 ![image](https://user-images.githubusercontent.com/28332522/62130909-6e897080-b2b0-11e9-934e-e298217e94c8.png)
 
-##Diagrama de Classes 
+## Diagrama de Classes 
 https://github.com/DouglasEleuterio/ModelagemEProgramacao/files/3446856/Diagrama.de.Classes.pdf
 
 ## Getting Started
