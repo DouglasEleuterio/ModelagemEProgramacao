@@ -24,6 +24,8 @@ Sistema de Pedidos implementado para atender os requisitos aprensentados no Curs
 https://github.com/DouglasEleuterio/ModelagemEProgramacao/files/3446856/Diagrama.de.Classes.pdf
 
 ## Diagrama de Objetos Instanciados (Simulação)
+[Instancias.pdf](https://github.com/DouglasEleuterio/ModelagemEProgramacao/files/3446871/Instancias.pdf)
+
 
 
 ## Getting Started
