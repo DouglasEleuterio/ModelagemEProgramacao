@@ -1,7 +1,7 @@
 # Sistema de Pedidos
 
 Sistema de Pedidos implementado para atender os requisitos aprensentados no Curso de Modelagem conceitual do Prof. Dr. Nélio Alves.
-Requisitos <<!-- Link do PDF -->
+Requisitos <!-- Link do PDF -->
 
 ## Getting Started
 
