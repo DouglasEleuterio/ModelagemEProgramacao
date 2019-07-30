@@ -1,7 +1,21 @@
 # Sistema de Pedidos
 
 Sistema de Pedidos implementado para atender os requisitos aprensentados no Curso de Modelagem conceitual do Prof. Dr. Nélio Alves.
-Requisitos <!-- Link do PDF -->
+<h2>Requisitos</h2>
+<br>
+<ul>
+  <h3>Deseja-se fazer um sistema de pedidos.</h3> 
+  <li>Um ou mais produtos podem ser vendidos em cada pedido, sendo que a cada produto pode ser dado um desconto diferente, e cada
+    produto pode ser vendido em uma ou mais unidades.</li>
+  <li>Cada produto possui nome e preço, e pode pertencer a várias categorias.</li>
+  <li>Cada pedido é feito por um cliente, que deve ter em seu cadastro nome, telefones, email, cpf ou cnpj, e um ou mais endereços,           sendo que o cliente deve especificar um endereço para entrega na hora de comprar.</li>
+  <li>Para um pedido, deve ser registrado o instante em que é realizado e o endereço de entrega.</li>
+  <li>Um pedido deve ser pago ou por boleto, ou por cartão de crédito.</li>
+  <li>No caso de boleto, deve-se armazenar a data de vencimento e a data de pagamento.</li>
+  <li>No caso de cartão de crédito, deve-se armazenar o número de parcelas.</li>
+  <li>Todo pagamento possui um estado (pendente, quitado ou cancelado).</li>
+</ul>
+
 
 ## Getting Started
 
