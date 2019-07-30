@@ -17,6 +17,9 @@ Sistema de Pedidos implementado para atender os requisitos aprensentados no Curs
   <li>Todo pagamento possui um estado (pendente, quitado ou cancelado).</li>
 </ul>
 
+## Arquitetura da Aplicação.
+![image](https://user-images.githubusercontent.com/28332522/62130909-6e897080-b2b0-11e9-934e-e298217e94c8.png)
+
 
 ## Getting Started
 
