@@ -23,6 +23,9 @@ Sistema de Pedidos implementado para atender os requisitos aprensentados no Curs
 ## Diagrama de Classes 
 https://github.com/DouglasEleuterio/ModelagemEProgramacao/files/3446856/Diagrama.de.Classes.pdf
 
+## Diagrama de Objetos Instanciados (Simulação)
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
