@@ -1,10 +1,11 @@
 # Sistema de Pedidos
 
 Sistema de Pedidos implementado para atender os requisitos aprensentados no Curso de Modelagem conceitual do Prof. Dr. Nélio Alves.
-<h2>Requisitos</h2>
+<h3>Deseja-se fazer um sistema de pedidos.</h3>
 <br>
 <ul>
-  <h3>Deseja-se fazer um sistema de pedidos.</h3> 
+  
+  <h2>Requisitos</h2>
   <li>Um ou mais produtos podem ser vendidos em cada pedido, sendo que a cada produto pode ser dado um desconto diferente, e cada
     produto pode ser vendido em uma ou mais unidades.</li>
   <li>Cada produto possui nome e preço, e pode pertencer a várias categorias.</li>
