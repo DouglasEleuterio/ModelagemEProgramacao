@@ -1,7 +1,9 @@
 package com.douglas.cursomc;
 
-import com.douglas.cursomc.categoria.Categoria;
+import com.douglas.cursomc.domain.Categoria;
+import com.douglas.cursomc.domain.Produto;
 import com.douglas.cursomc.repositories.CategoriaRepository;
+import com.douglas.cursomc.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,6 +22,8 @@ public class CursomcApplication implements CommandLineRunner{
 
     @Autowired
     CategoriaRepository categoriaRepository; //Injeção do repository para salvar os dados.
+    @Autowired 
+    ProdutoRepository produtoRepository;
     
     /**
      * Metodo responsável por iniciar a aplicação.
@@ -39,7 +43,24 @@ public class CursomcApplication implements CommandLineRunner{
     public void run(String... args) throws Exception {
         Categoria cat1 = new Categoria(null, "Informatica");
         Categoria cat2 = new Categoria(null, "Escritório");
+        
+        
+        Produto p1 = new Produto(null, "Computador",2.000);
+        Produto p2 = new Produto(null, "Ipressora",800.00);
+        Produto p3 = new Produto(null, "Mouse",80.00);
+        
+        //Relacionando categorias aos produtos
+        cat1.getProdutos().addAll(Arrays.asList(p1,p2,p3));//Relacionando produtos as categorias
+        cat2.getProdutos().addAll(Arrays.asList(p2));//Relacionando a impressora com escritório
+        
+	//Relacionando os produtos as categorias.
+	p1.getCategorias().addAll(Arrays.asList(cat1));
+       	p2.getCategorias().addAll(Arrays.asList(cat1,cat2));
+	p3.getCategorias().addAll(Arrays.asList(cat1));
+
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+	produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
+
     }
 
 }

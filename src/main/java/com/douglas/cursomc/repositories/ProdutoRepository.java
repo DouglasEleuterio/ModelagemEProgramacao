@@ -2,7 +2,7 @@ package com.douglas.cursomc.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.douglas.cursomc.domain.Categoria;
+import com.douglas.cursomc.domain.Produto;
 
 /**
  * Classe responsável pelas operações no banco de dados.
@@ -16,7 +16,7 @@ import com.douglas.cursomc.domain.Categoria;
  * @see CategoriaService
  * @see JpaRepository
  */
-public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
+public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
 	/*
 	 * Interface que estende JpaRepository para fornecer acesso aos dados.
