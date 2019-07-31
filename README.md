@@ -29,12 +29,18 @@ https://github.com/DouglasEleuterio/ModelagemEProgramacao/files/3446856/Diagrama
 
 
 ## Getting Started
+Para realizar o Download do projeto acesse: https://github.com/DouglasEleuterio/ModelagemEProgramacao.git ou clone através do seu gerenciador GIT.
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
-
-What things you need to install the software and how to install them
+### Requisitos
+<ul>
+  <li>JDK 1.8 ou Superior</li>
+<li>Maven 3.5.0 ou Superior.</li>
+<li>Banco de dados H2 Será configurado automaticamente caso deixe as configuraços da forma que está.
+    Caso queira alterar as configuraçoes, acesse o arquivo application.properties na pasta resources.</li>
+<li>IDE de sua preferencia. Foi utilizado Spring Tools Suite e Netbeans durante o desenvolvimento.</li>
+</ul>
 
 ```
 Give examples
