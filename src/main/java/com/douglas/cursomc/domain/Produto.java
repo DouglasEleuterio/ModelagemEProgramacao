@@ -5,6 +5,9 @@
  */
 package com.douglas.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +46,14 @@ public class Produto implements Serializable{
      * joinColumns -> deve informar a classe em que foi realizado a implementação.
      * inverseJoinColumns -> deve ser usado na classe que está relacionando.
      * No outro lado da relacao deve ser informado...
+     * Referencia Cíclica - Ao listar uma categoria é listado os produtos, que traz a categoria novamente, e assim forma um loop
+     * Para solucionar o problema a anotação @JsonBackReference foi utilizada.
+     * Devemos usar a anotação do lado que **NÃO** desejamos que que busque os objetos associados.
+     * No outro lado da relação utiliza-se @JsonManagedReference
+     * Neste cenário, as categorias trará os produtos quando houver uma solicitação do Obj.
+     * O Contrário não é verdadeiro.
      */
+    @JsonBackReference
     @ManyToMany
     @JoinTable(name = "PRODUTO_CATEGORIA",
             joinColumns = @JoinColumn(name = "produto_id"),

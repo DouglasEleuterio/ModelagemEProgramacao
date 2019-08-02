@@ -1,5 +1,7 @@
 package com.douglas.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,14 @@ public class Categoria implements Serializable{
          * Relacionamento com a classe produto.
          * Uma categoria é de vários produtos.
          * Relacionamento definido na classe produto
+		 * Referencia Cíclica - Ao listar uma categoria é listado os produtos, que traz a categoria novamente, e assim forma um loop
+		 * Para solucionar o problema a anotação @JsonManagedReference foi utilizada.
+		 * Devemos usar a anotação do lado que desejamos que que busque os objetos associados.
+		 * No outro lado da relação utiliza-se @JsonBackReference
+		 * Neste cenário, as categorias trará os produtos quando houver uma solicitação do Obj.
+		 * O Contrário não é verdadeiro.
          */
+		@JsonManagedReference
         @ManyToMany(mappedBy = "categorias") //Informado que o mapeamento foi realizado no atributo categorias da Classe Produto.
         private List<Produto> produtos = new ArrayList<>();
         

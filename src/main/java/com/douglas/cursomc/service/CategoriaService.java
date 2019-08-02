@@ -2,6 +2,7 @@ package com.douglas.cursomc.service;
 
 import java.util.Optional;
 
+import com.douglas.cursomc.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import com.douglas.cursomc.repositories.CategoriaRepository;
  * A classe de acesso aos dados, ficará responsável apenas por acessar aos dados.
  * A Classe de Controladores, ficará responsável apenas por "conversar" com o "FRONT-END".
  * @author Douglas Eleutério
+ *
  */
 @Service
 public class CategoriaService {
@@ -24,12 +26,18 @@ public class CategoriaService {
 
 	/**
 	 * Nova implementação do JAVA 8 
-	 * Caso o objeto com id não seja encontrado, não será retornado NullPointerException.
+	 * Caso o objeto com id não seja encontrado, será lançada nossa exceção personalizada.
+	 * É de responsabilidade da camada de Controle enviar o erro, cabendo a camada de serviço a implementação.
 	 * @param id - Receberá um id para realizar a busca do objeto.
 	 * @return Objeto do tipo categoria
+	 * @throws ObjectNotFoundException - Caso não localize o ID
+	 * @see ObjectNotFoundException
+	 * @exception ObjectNotFoundException - Será lançado caso não localize o obj com id informado.
 	 */
 	public Categoria buscar(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElse(null);
+		return 	obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto Não Encontrado!	Id: " +id+" , Tipo: "+CategoriaService.class.getName()
+		));
 	}
-}			
+}
