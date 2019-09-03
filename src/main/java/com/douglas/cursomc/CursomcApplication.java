@@ -1,8 +1,12 @@
 package com.douglas.cursomc;
 
 import com.douglas.cursomc.domain.Categoria;
+import com.douglas.cursomc.domain.Cidade;
+import com.douglas.cursomc.domain.Estado;
 import com.douglas.cursomc.domain.Produto;
 import com.douglas.cursomc.repositories.CategoriaRepository;
+import com.douglas.cursomc.repositories.CidadeRepository;
+import com.douglas.cursomc.repositories.EstadoRepository;
 import com.douglas.cursomc.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -24,6 +28,11 @@ public class CursomcApplication implements CommandLineRunner{
     CategoriaRepository categoriaRepository; //Injeção do repository para salvar os dados.
     @Autowired 
     ProdutoRepository produtoRepository;
+    @Autowired
+    EstadoRepository estadoRepository;
+    @Autowired
+    CidadeRepository cidadeRepository;
+    
     
     /**
      * Metodo responsável por iniciar a aplicação.
@@ -53,13 +62,30 @@ public class CursomcApplication implements CommandLineRunner{
         cat1.getProdutos().addAll(Arrays.asList(p1,p2,p3));//Relacionando produtos as categorias
         cat2.getProdutos().addAll(Arrays.asList(p2));//Relacionando a impressora com escritório
         
-	    //Relacionando os produtos as categorias.
-	    p1.getCategorias().addAll(Arrays.asList(cat1));
+	//Relacionando os produtos as categorias.
+	p1.getCategorias().addAll(Arrays.asList(cat1));
        	p2.getCategorias().addAll(Arrays.asList(cat1,cat2));
-	    p3.getCategorias().addAll(Arrays.asList(cat1));
+	p3.getCategorias().addAll(Arrays.asList(cat1));
 
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
-	    produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
+	produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
+        
+        //Instanciando as Cidades e estados
+        //Estados
+        Estado est1 = new Estado(null, "São Paulo");
+        Estado est2 = new Estado(null, "Minas Gerais");
+        //Cidades
+        Cidade cid1 = new Cidade(null, "Uberlandia", est2);
+        Cidade cid2 = new Cidade(null, "São Paulo", est1);
+        Cidade cid3 = new Cidade(null, "Campinas", est1);
+        //Informando ao estado, as cidades que o compoem.    
+        est1.getCidades().addAll(Arrays.asList(cid1));
+        est2.getCidades().addAll(Arrays.asList(cid2,cid3));
+        //Salvando Estado e Cidade no banco conforme lista
+        estadoRepository.saveAll(Arrays.asList(est1,est2));
+        cidadeRepository.saveAll(Arrays.asList(cid1,cid2,cid3));
+        
+        
 
     }
 }
