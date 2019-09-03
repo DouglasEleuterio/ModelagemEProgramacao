@@ -40,7 +40,7 @@ public class Categoria implements Serializable{
 		 * Neste cenário, as categorias trará os produtos quando houver uma solicitação do Obj.
 		 * O Contrário não é verdadeiro.
          */
-		@JsonManagedReference
+	@JsonManagedReference
         @ManyToMany(mappedBy = "categorias") //Informado que o mapeamento foi realizado no atributo categorias da Classe Produto.
         private List<Produto> produtos = new ArrayList<>();
         
