@@ -6,6 +6,7 @@
 package com.douglas.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.GeneratedValue;
@@ -29,8 +30,7 @@ public class Cidade  implements Serializable{
     private String nome;
     
     
-    @JsonBackReference//A cidade pode serializar o estado.
-    @ManyToOne
+   @ManyToOne
     @JoinColumn(name = "estado_id")//Nome da tabela no banco que ferá o relacionamento
     private Estado estado;
 

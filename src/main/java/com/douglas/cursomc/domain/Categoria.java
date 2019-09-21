@@ -36,11 +36,10 @@ public class Categoria implements Serializable{
 		 * Referencia Cíclica - Ao listar uma categoria é listado os produtos, que traz a categoria novamente, e assim forma um loop
 		 * Para solucionar o problema a anotação @JsonManagedReference foi utilizada.
 		 * Devemos usar a anotação do lado que desejamos que que busque os objetos associados.
-		 * No outro lado da relação utiliza-se @JsonBackReference
+		 * No outro lado da relação utiliza-se @JsonIgnore
 		 * Neste cenário, as categorias trará os produtos quando houver uma solicitação do Obj.
 		 * O Contrário não é verdadeiro.
          */
-	@JsonManagedReference
         @ManyToMany(mappedBy = "categorias") //Informado que o mapeamento foi realizado no atributo categorias da Classe Produto.
         private List<Produto> produtos = new ArrayList<>();
         

@@ -6,6 +6,7 @@
 package com.douglas.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
@@ -31,6 +32,7 @@ import javax.persistence.OneToMany;
 public class Produto implements Serializable{
     
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
@@ -50,13 +52,13 @@ public class Produto implements Serializable{
      * inverseJoinColumns -> deve ser usado na classe que está relacionando.
      * No outro lado da relacao deve ser informado...
      * Referencia Cíclica - Ao listar uma categoria é listado os produtos, que traz a categoria novamente, e assim forma um loop
-     * Para solucionar o problema a anotação @JsonBackReference foi utilizada.
+     * Para solucionar o problema a anotação @JsonIgnore foi utilizada.
      * Devemos usar a anotação do lado que **NÃO** desejamos que que busque os objetos associados.
      * No outro lado da relação utiliza-se @JsonManagedReference
      * Neste cenário, as categorias trará os produtos quando houver uma solicitação do Obj.
      * O Contrário não é verdadeiro.
      */
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "PRODUTO_CATEGORIA",
             joinColumns = @JoinColumn(name = "produto_id"),
@@ -67,6 +69,8 @@ public class Produto implements Serializable{
     
     //O pedido vai conhecer os itens de pedido associado a ela.
     //Utilizando Set(Conjunto) para garantir que não exista item repetido no mesmo pedido.
+    //Para serialização, a partir do ItemPedido temos acesso aos produtos
+    @JsonIgnore
     @OneToMany(mappedBy = "id.produto")
     private Set<ItemPedido> itens = new HashSet<>();
 
@@ -81,6 +85,8 @@ public class Produto implements Serializable{
     }
 
     //O produto necessita conhecer os Pedidos associados a ele.
+    //Controlar serialização para que os pedidos não tenha acesso aos produtos, como produtos tem acesso aos pedidos, dara referencia ciclica.
+    @JsonIgnore
     public List<Pedido> getPedidos(){
         List<Pedido> lista = new ArrayList<>();
         //Percorrer a lista de Itens

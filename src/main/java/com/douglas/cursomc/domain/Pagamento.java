@@ -5,6 +5,9 @@
 package com.douglas.cursomc.domain;
 
 import com.douglas.cursomc.domain.Enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.GeneratedValue;
@@ -41,6 +44,7 @@ public abstract class  Pagamento implements Serializable{
      * Associação Pedido - Pagamento. 1 para 1.
      * O Pagamento não pode serializar o pedido.
      */
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "pedido_id")
     @MapsId //Setando o valor do Id do Pedido com id de pagamento.

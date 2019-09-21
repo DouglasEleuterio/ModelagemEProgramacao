@@ -5,7 +5,7 @@
  */
 package com.douglas.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.GeneratedValue;
@@ -32,10 +32,11 @@ public class Endereco implements Serializable{
     private String bairro;
     private String cep;
     
-    @JsonBackReference //O Endereço não pode serializar o cliente
+    @JsonIgnore //O Endereço não pode serializar o cliente
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+    
     @ManyToOne
     @JoinColumn(name = "cidade_id")
     private Cidade cidade;

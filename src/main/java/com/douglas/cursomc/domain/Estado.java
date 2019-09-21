@@ -5,7 +5,7 @@
  */
 package com.douglas.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class Estado implements Serializable{
     private String nome;
     
     
-    @JsonBackReference //O estado não pode serializar suas cidades
+    @JsonIgnore //O estado não pode serializar suas cidades
     @OneToMany(mappedBy = "estado")//ATRIBUTO que fez o mapeamento do outro lado.
     private List<Cidade> cidades = new ArrayList<>();
 

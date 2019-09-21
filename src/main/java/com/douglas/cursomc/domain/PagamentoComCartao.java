@@ -17,6 +17,7 @@ public class PagamentoComCartao extends Pagamento{
     
     //Estrategia de salvamento definido na superclasse
     private static final long servialVersionUID = 1L;
+    
     private Integer numeroDeParcelas;
 
     /**

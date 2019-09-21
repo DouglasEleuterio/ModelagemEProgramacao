@@ -10,6 +10,7 @@
  */
 package com.douglas.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
@@ -42,6 +43,7 @@ public class Pedido implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Integer id;
+    @JsonFormat(pattern="dd/MM/yyyy HH:mm")
     private Date instante;
 
     /**
@@ -49,7 +51,6 @@ public class Pedido implements Serializable{
      * Mapeamento Bidirecional 1 - 1 e garantindo que o id do pagamento seja igual ao id do pedido correspondente.
      * Para tratar a serialização cíclica, o Pedido pode serializar o Pagamento, o inverso não pode.
      */
-    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") //Necessario para evitar erro de entidade Transiente.
     private Pagamento pagamento;
 
@@ -58,7 +59,6 @@ public class Pedido implements Serializable{
      * cliente também precisa conhecer o pedido Bidirecional.
      * O Pedido precisa exibir o cliente, ou seja, deixaremos o Pedido Serializar o Cliente.
      */
-    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;

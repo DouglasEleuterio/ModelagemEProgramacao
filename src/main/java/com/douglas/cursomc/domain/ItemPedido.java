@@ -4,6 +4,7 @@
  */
 package com.douglas.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.EmbeddedId;
@@ -20,6 +21,7 @@ public class ItemPedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
     //Chave composta contendo o produto e pedido.
+    @JsonIgnore//Ignora a serialização. Item pedido não serializa ninguém.
     @EmbeddedId //Classe id embutido na classe auxiliar.
     private ItemPedidoPK id = new ItemPedidoPK();
 
@@ -39,6 +41,7 @@ public class ItemPedido implements Serializable {
         this.preco = preco;
     }
 
+    @JsonIgnore
     public Pedido getPedido() {
         return id.getPedido();
     }

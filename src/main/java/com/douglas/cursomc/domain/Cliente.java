@@ -6,6 +6,7 @@
 package com.douglas.cursomc.domain;
 
 import com.douglas.cursomc.domain.Enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class Cliente implements Serializable{
     private String cpfOuCnpj;
     private Integer tipo;
     
-    //@JsonBackReference //O cliente pode serializar os endereços dele
+     //O cliente pode serializar os endereços dele
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
     
@@ -50,7 +51,7 @@ public class Cliente implements Serializable{
      * Pedidos também necessita conhecer o cliente Bidirecional
      * Não é permitido os pedidos serializar os clientes.
      */
-    @JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
     

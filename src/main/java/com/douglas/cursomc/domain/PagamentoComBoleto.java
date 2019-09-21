@@ -6,6 +6,7 @@
 package com.douglas.cursomc.domain;
 
 import com.douglas.cursomc.domain.Enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 /**
@@ -18,7 +19,11 @@ public class PagamentoComBoleto extends Pagamento{
     
     //Estrategia de salvamento definido na superclasse
     private static final long servialVersionUID = 1L;
+    
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dataVencimento;
+    
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dataPagamento;
 
     /**
