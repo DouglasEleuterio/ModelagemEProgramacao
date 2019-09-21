@@ -10,8 +10,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -61,6 +64,13 @@ public class Produto implements Serializable{
     )
     private List<Categoria> categorias = new ArrayList<>(); //atributo será utilizado na classe categoria para informar que o mapeamento já foi realizado nessa classe.
     
+    
+    //O pedido vai conhecer os itens de pedido associado a ela.
+    //Utilizando Set(Conjunto) para garantir que não exista item repetido no mesmo pedido.
+    @OneToMany(mappedBy = "id.produto")
+    private Set<ItemPedido> itens = new HashSet<>();
+
+    
     public Produto(){}
 
     public Produto(Integer id, String nome, Double preco) {
@@ -70,6 +80,19 @@ public class Produto implements Serializable{
         this.preco = preco;
     }
 
+    //O produto necessita conhecer os Pedidos associados a ele.
+    public List<Pedido> getPedidos(){
+        List<Pedido> lista = new ArrayList<>();
+        //Percorrer a lista de Itens
+        for(ItemPedido x : itens){
+            //para item de pedido x que existe na minha lista de itens, vou adicionar o pedido associado a ele na minha lista.
+        lista.add(x.getPedido());
+       
+        }
+         return lista;
+    }
+    
+    //Getters e Setters
     public Integer getId() {
         return id;
     }
@@ -100,6 +123,14 @@ public class Produto implements Serializable{
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
 
     @Override

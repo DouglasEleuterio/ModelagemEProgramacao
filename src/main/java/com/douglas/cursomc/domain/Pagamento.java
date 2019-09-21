@@ -39,6 +39,7 @@ public abstract class  Pagamento implements Serializable{
     
     /**
      * Associação Pedido - Pagamento. 1 para 1.
+     * O Pagamento não pode serializar o pedido.
      */
     @OneToOne
     @JoinColumn(name = "pedido_id")

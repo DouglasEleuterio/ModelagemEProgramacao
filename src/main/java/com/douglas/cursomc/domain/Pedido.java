@@ -10,9 +10,12 @@
  */
 package com.douglas.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +23,7 @@ import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -43,14 +47,18 @@ public class Pedido implements Serializable{
     /**
      * Associação da Classe Pedido - Pagamento. 1 - 1
      * Mapeamento Bidirecional 1 - 1 e garantindo que o id do pagamento seja igual ao id do pedido correspondente.
+     * Para tratar a serialização cíclica, o Pedido pode serializar o Pagamento, o inverso não pode.
      */
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") //Necessario para evitar erro de entidade Transiente.
     private Pagamento pagamento;
 
     /**
      * Associação de Classe Pedido - Cliente. * - 1 Associação Bidirecional, o
      * cliente também precisa conhecer o pedido Bidirecional.
+     * O Pedido precisa exibir o cliente, ou seja, deixaremos o Pedido Serializar o Cliente.
      */
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
@@ -59,11 +67,18 @@ public class Pedido implements Serializable{
      * Associação da Classe Pedido - Endereço. * - 1 Associação direcionada de
      * Pedido para Endereço. Sendo assim, o Endereço não precisa conhecer o
      * pedido.
+     * Como o endereço não conhece o pedido, não precisa tratar serialização cíclica.
      */
     @ManyToOne()
     @JoinColumn(name = "endereco_de_entrega_id")
     private Endereco enderecoDeEntrega;
 
+    
+    //O pedido vai conhecer os itens de pedido associado a ela.
+    //Utilizando Set(Conjunto) para garantir que não exista item repetido no mesmo pedido.
+    @OneToMany(mappedBy = "id.pedido")
+    private Set<ItemPedido> itens = new HashSet<>();
+    
     /**
      * Construtores
      */
@@ -116,6 +131,14 @@ public class Pedido implements Serializable{
 
     public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
         this.enderecoDeEntrega = enderecoDeEntrega;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
     
     //HashCode
