@@ -4,15 +4,23 @@ import com.douglas.cursomc.domain.Categoria;
 import com.douglas.cursomc.domain.Cidade;
 import com.douglas.cursomc.domain.Cliente;
 import com.douglas.cursomc.domain.Endereco;
+import com.douglas.cursomc.domain.Enums.EstadoPagamento;
 import com.douglas.cursomc.domain.Estado;
 import com.douglas.cursomc.domain.Produto;
-import com.douglas.cursomc.domain.TipoCliente;
+import com.douglas.cursomc.domain.Enums.TipoCliente;
+import com.douglas.cursomc.domain.Pagamento;
+import com.douglas.cursomc.domain.PagamentoComBoleto;
+import com.douglas.cursomc.domain.PagamentoComCartao;
+import com.douglas.cursomc.domain.Pedido;
 import com.douglas.cursomc.repositories.CategoriaRepository;
 import com.douglas.cursomc.repositories.CidadeRepository;
 import com.douglas.cursomc.repositories.ClienteRepository;
 import com.douglas.cursomc.repositories.EnderecoRepository;
 import com.douglas.cursomc.repositories.EstadoRepository;
+import com.douglas.cursomc.repositories.PagamentoRepository;
+import com.douglas.cursomc.repositories.PedidoRepository;
 import com.douglas.cursomc.repositories.ProdutoRepository;
+import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -30,18 +38,21 @@ import java.util.Arrays;
 public class CursomcApplication implements CommandLineRunner{
 
     @Autowired
-    CategoriaRepository categoriaRepository; //Injeção do repository para salvar os dados.
+    private CategoriaRepository categoriaRepository; //Injeção do repository para salvar os dados.
     @Autowired 
-    ProdutoRepository produtoRepository;
+    private ProdutoRepository produtoRepository;
     @Autowired
-    EstadoRepository estadoRepository;
+    private EstadoRepository estadoRepository;
     @Autowired
-    CidadeRepository cidadeRepository;
+    private CidadeRepository cidadeRepository;
     @Autowired
-    EnderecoRepository enderecoRepository;
+    private EnderecoRepository enderecoRepository;
     @Autowired
-    ClienteRepository clienteRepository;
-    
+    private ClienteRepository clienteRepository;
+    @Autowired
+    private PagamentoRepository pagamentoRepository;
+    @Autowired
+    private PedidoRepository pedidoRepository;
     
     /**
      * Metodo responsável por iniciar a aplicação.
@@ -104,5 +115,23 @@ public class CursomcApplication implements CommandLineRunner{
         
         clienteRepository.saveAll(Arrays.asList(cli1));
         enderecoRepository.saveAll(Arrays.asList(e1,e2));
+        
+        //Instanciando o pedido.
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        Pedido ped1 = new Pedido(null,sdf.parse("30/09/2017 10:32") , cli1, e1);
+        Pedido ped2 = new Pedido(null,sdf.parse("10/10/2017 19:35") , cli1, e2);
+        
+        Pagamento pagto1 = new PagamentoComCartao(6, null, EstadoPagamento.QUITADO, ped1);  
+        ped1.setPagamento(pagto1);
+        
+        Pagamento pagto2 = new PagamentoComBoleto(sdf.parse("20/10/2017 00:00"),null, null, EstadoPagamento.PENDENTE, ped2);
+        ped2.setPagamento(pagto2);
+        
+        //Associando cliente com seus pedidos
+        
+        cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+        
+        pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+        pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
     }
 }

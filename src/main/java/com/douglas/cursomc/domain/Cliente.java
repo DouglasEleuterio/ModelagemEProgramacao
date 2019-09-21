@@ -5,7 +5,7 @@
  */
 package com.douglas.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.douglas.cursomc.domain.Enums.TipoCliente;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,14 +36,23 @@ public class Cliente implements Serializable{
     private String cpfOuCnpj;
     private Integer tipo;
     
-    //@JsonBackReference //O cliente pode serializar o endereço
+    //@JsonBackReference //O cliente pode serializar os endereços dele
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
     
-    @ElementCollection
+    @ElementCollection 
     @CollectionTable(name = "telefone")
     private Set<String> telefones = new HashSet<>();
 
+    /**
+     * Associação Cliente - Pedido. 1 - *
+     * Pedidos também necessita conhecer o cliente Bidirecional
+     */
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> pedidos = new ArrayList<>();
+    
+    
+    //Construtores
     public Cliente() {
     }
 
@@ -54,7 +63,8 @@ public class Cliente implements Serializable{
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = tipo.getCod();
     }
-
+    
+    //Getters and Setters
     public Integer getId() {
         return id;
     }
@@ -111,13 +121,22 @@ public class Cliente implements Serializable{
         this.telefones = telefones;
     }
 
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    //HashCode
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 53 * hash + Objects.hashCode(this.id);
         return hash;
     }
-
+    //Equals
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -135,7 +154,4 @@ public class Cliente implements Serializable{
         }
         return true;
     }
-
-    
-    
 }
