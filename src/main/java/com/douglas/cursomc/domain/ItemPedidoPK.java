@@ -1,8 +1,3 @@
-/*
- * Classe auxiliar para ItemPedido.
-    A classe facilitará a definição do ID da classe ItemPedido, que será a junção dos Ids das classes Produto e Pedido.
-   Chave composta da classe ItemPedido.
- */
 package com.douglas.cursomc.domain;
 
 import java.io.Serializable;
@@ -12,9 +7,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
+ * Classe Auxiliar de ItemPedido.
+ * <br/>Classe responsável por construir o Id de ItemPedido, 
+ *  não possui tabela no Banco de Dados.
+ * <br/>A técnica é utilizada para gerar um ID composto, será composto pelos ids
+ *      das classes associativas.
+ * <br/>Atributos: 
+ *  <br/> &nbsp pedido : Pedido 
+ *  <br/> &nbsp produto : Produto
+ * <br/>Metodos: Getters and Setters, HashCode e Equals.
+ * <br/>Instancia e inicializa Pedido e Produto.
  *
- * @author douglas
+ * @see ItemPedido
+ * @see Produto
+ * @see Pedido
+ * @author douglas eleuterio
+ * @version 0.2.0
  */
+
 @Embeddable
 public class ItemPedidoPK implements Serializable{
     private static final Long serialVersionUID = 1L;

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.douglas.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,13 +11,33 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
+ * Endereços dos Clientes.
+ * Classe responsável por representar os Endereços que
+ *  serão persistidos no banco de dados.
+ * Nome da Tabela no Banco de Dados: endereco.
+ * Atributos:
+ *  id : Integer (Gerado automaticamente pelo banco)
+ *  logradouro : String
+ *  numero: String
+ *  complemento: String
+ *  bairro : String
+ *  cep : String
+ * Metodos: Getters and Setters, HashCode e Equals.
+ * Relacionamentos:
+ *      cidade: ManyToOne  Vários endereços pertence a uma cidade.
+ *      cliente: ManyToOne Vários clientes pertence a um cliente. 
+ * Instancia cliente e cidade.
  *
- * @author douglas
+ * @see Cliente
+ * @see Cidade
+ * @author douglas eleuterio
+ * @version 0.2.0
  */
-@Entity
+
+@Entity(name = "endereco")
 public class Endereco implements Serializable{
-    
     private static final long servialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;

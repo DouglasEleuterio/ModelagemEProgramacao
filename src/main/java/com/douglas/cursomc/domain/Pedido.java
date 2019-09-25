@@ -1,17 +1,6 @@
-/*
- * Implementação da classe mais importante do nosso dominio.
- * A Classe pedido fará a conexão/ligação entre os principais elementos do sistema, sendo eles:
- * Cliente
- * Endereço
- * Pagamento
- * ItemPedido ( A ligação não poderá ser feita diretamente com produto para evitar a seguinte situação.
- *      Ao recuperarmos o valor do produto vendido no pedido em especifico, o valor que será retornado será o preço atual do produto no sistema.
- *      Da forma que estamos modelando, ficará registrado o valor do produto no ato da venda, não podendo ser alterado posteriormente.
- */
 package com.douglas.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -28,21 +17,40 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
+ * Pedido.
+ * <br/>Implementação da classe mais importante do nosso dominio.
+ * <br/>Classe responsável por representar os Pedidos, 
+ *  sendo persistidos no banco de dados.
+ * <br/> A Classe pedido fará a conexão/ligação entre os principais elementos do sistema, sendo eles:
+ * <br/>&nbsp Cliente
+ * <br/>&nbsp Endereço
+ * <br/>&nbsp Pagamento
+ * <br/>&nbsp ItemPedido ( A ligação não poderá ser feita diretamente com produto para evitar a seguinte situação.<br/>
+ * <br/>&nbsp Ao recuperarmos o valor do produto vendido no pedido em especifico, o valor que será retornado será o preço atual do produto no sistema.
+ * <br/>&nbsp Da forma que estamos modelando, ficará registrado o valor do produto no ato da venda, não podendo ser alterado posteriormente.
+ * <br/>Nome da Tabela no Banco de Dados: pedido.
+ * <br/>Atributos: 
+ *  <br/> &nbsp id : Integer (Gerado automaticamente)
+ *  <br/> &nbsp instante : Date
+ * <br/>Metodos: Getters and Setters, HashCode e Equals.
+ * <br/>Instancia e inicializa Pagamento, Cliente, Endereco, Itens.
  *
- * @author douglas
- * @see ItemPedido
  * @see Pagamento
+ * @see Cliente
  * @see Endereco
- *
+ * @see Itens
+ * @author douglas eleuterio
+ * @version 0.2.0
  */
-@Entity
+
+@Entity(name = "pedido")
 public class Pedido implements Serializable{
     private static final long servialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer id;
+
     @JsonFormat(pattern="dd/MM/yyyy HH:mm")
     private Date instante;
 
@@ -73,7 +81,10 @@ public class Pedido implements Serializable{
     @JoinColumn(name = "endereco_de_entrega_id")
     private Endereco enderecoDeEntrega;
 
+ 
+    /* Como o Pedido conhece os itens associados a ele?
     
+    */
     //O pedido vai conhecer os itens de pedido associado a ela.
     //Utilizando Set(Conjunto) para garantir que não exista item repetido no mesmo pedido.
     @OneToMany(mappedBy = "id.pedido")

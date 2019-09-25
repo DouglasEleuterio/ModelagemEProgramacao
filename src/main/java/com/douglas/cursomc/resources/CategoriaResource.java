@@ -15,7 +15,7 @@ import com.douglas.cursomc.service.CategoriaService;
  * Classe da Ponta da Arquitetura MVC.
  * A responsábilidade da classe é comunicar-se com o FRONT-END.
  * Passando-lhe os dados, erros, filtros, exceções, etc provenientes da classe de serviço.
- * O serviço será acessado através do endereço "www.endereco.com"/categorias
+ * O serviço será acessado através do endereço "www.site.com"/categorias
  *
  * @author Douglas Eleutério - Graduando em Engenharia de Software pela Unicesumar 2019-2023
  * @version 0.0.1

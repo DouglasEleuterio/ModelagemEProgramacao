@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.douglas.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,57 +18,62 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
+ * Classe Produtos.
+ * Responsável por representar os Produtos que
+ *  serão persistidas no banco de dados.
+ * Nome da Tabela no Banco de Dados: produto.
+ * Atributos:
+ *  id : Integer (Gerado automaticamente pelo banco)
+ *  nome : String
+ * Metodos: Getters and Setters, HashCode e Equals.
+ *  Relacionamento: ManyToMany, Muitos Categoria percetencem á muitas Categorias;
+ *  Ex: Categoria {Informatica, Eletronicos} - Produto{Mouse, Monitor}
+ * Instancia e inicializa uma lista de Pedidos, Categorias, ItemPedido.
  *
- * @author douglas
+ * @see Pedido
+ * @see Categoria
+ * @see ItemPedido 
+ * @author douglas eleuterio
+ * @version 0.2.0
  */
-@Entity
-public class Produto implements Serializable{
-    
+
+@Entity(name = "produto")
+public class Produto implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
     private Double preco;
-    
-    
-    /**
-     * Associações com categorias.
-     * Um produto possui uma ou mais categorias.
-     * Quando possuimos um relacionamento de Muitos para Muitos
-     * É criado uma tabela no meio contendo as duas chaves estrageiras
-     * PRODUTO_CATEGORIA será a tabela contendo as chaves estrangeiras
-     * produto_id será o campo da tabela que guardará a chave estrangeira do produto
-     * categoria_id será o campo da tabela que guardará a chave estrangeira da categoria
-     * joinColumns -> deve informar a classe em que foi realizado a implementação.
-     * inverseJoinColumns -> deve ser usado na classe que está relacionando.
-     * No outro lado da relacao deve ser informado...
-     * Referencia Cíclica - Ao listar uma categoria é listado os produtos, que traz a categoria novamente, e assim forma um loop
-     * Para solucionar o problema a anotação @JsonIgnore foi utilizada.
-     * Devemos usar a anotação do lado que **NÃO** desejamos que que busque os objetos associados.
-     * No outro lado da relação utiliza-se @JsonManagedReference
-     * Neste cenário, as categorias trará os produtos quando houver uma solicitação do Obj.
-     * O Contrário não é verdadeiro.
+
+    /*
+     * Quando possuimos um relacionamento de Muitos para Muitos É criado uma
+     * tabela "no meio" das classes, contendo as duas chaves estrageiras.
+     * Essa tabela recebeu o nome de: PRODUTO_CATEGORIA
+     * Nossa tabela possui duas colunas, produto_id e categoria_id. Das respectivas classes.
      */
-    @JsonIgnore
+    @JsonIgnore //Resolvendo Referencia Cíclica.
     @ManyToMany
-    @JoinTable(name = "PRODUTO_CATEGORIA",
+    @JoinTable(name = "PRODUTO_CATEGORIA", //Tabela de associação.
             joinColumns = @JoinColumn(name = "produto_id"),
             inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
-    private List<Categoria> categorias = new ArrayList<>(); //atributo será utilizado na classe categoria para informar que o mapeamento já foi realizado nessa classe.
-    
-    
-    //O pedido vai conhecer os itens de pedido associado a ela.
-    //Utilizando Set(Conjunto) para garantir que não exista item repetido no mesmo pedido.
-    //Para serialização, a partir do ItemPedido temos acesso aos produtos
-    @JsonIgnore
+    private List<Categoria> categorias = new ArrayList<>();
+
+    /*
+     * Relacionamento entre Produto e Pedido, o relacionamento não será direto. 
+     * O relacionamento acontecerá pela classe associativa ItemPedido.
+     * Dessa forma, resolvemos o problema do valor do produto no pedido ser mutável após fechamento do pedido.   
+     * O Produto precisa conhecer o itens associados a ele.
+     */
+    @JsonIgnore //A classe produto não serializará os Itens do Pedido.
     @OneToMany(mappedBy = "id.produto")
     private Set<ItemPedido> itens = new HashSet<>();
 
-    
-    public Produto(){}
+    public Produto() {
+    }
 
     public Produto(Integer id, String nome, Double preco) {
         super();
@@ -84,20 +82,21 @@ public class Produto implements Serializable{
         this.preco = preco;
     }
 
-    //O produto necessita conhecer os Pedidos associados a ele.
-    //Controlar serialização para que os pedidos não tenha acesso aos produtos, como produtos tem acesso aos pedidos, dara referencia ciclica.
-    @JsonIgnore
-    public List<Pedido> getPedidos(){
+    /* O produto necessita conhecer os Pedidos associados a ele.
+     *   
+     */
+    @JsonIgnore // Não permite que Produto serialize Pedido
+    public List<Pedido> getPedidos() {
         List<Pedido> lista = new ArrayList<>();
         //Percorrer a lista de Itens
-        for(ItemPedido x : itens){
+        for (ItemPedido x : itens) {
             //para item de pedido x que existe na minha lista de itens, vou adicionar o pedido associado a ele na minha lista.
-        lista.add(x.getPedido());
-       
+            lista.add(x.getPedido());
+
         }
-         return lista;
+        return lista;
     }
-    
+
     //Getters e Setters
     public Integer getId() {
         return id;
@@ -163,7 +162,5 @@ public class Produto implements Serializable{
         }
         return true;
     }
-    
-    
-    
+
 }

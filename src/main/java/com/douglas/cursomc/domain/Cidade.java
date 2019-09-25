@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.douglas.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.GeneratedValue;
@@ -17,25 +10,39 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Entity;
 
 /**
+ * Categoria das cidades.
+ * Classe responsável por representar as Cidades que
+ *  serão persistidas no banco de dados.
+ * Nome da Tabela no Banco de Dados: cidade.
+ * Atributos:
+ *  id : Integer (Gerado automaticamente pelo banco)
+ *  nome : String
+ * Metodos: Getters and Setters, HashCode e Equals.
+ * Relacionamentos: estado: OneToMany, Muitas Cidades percetencem á um Estado;
  *
- * @author douglas
+ * @see Produto
+ * @author douglas eleuterio
+ * @version 0.2.0
  */
-@Entity
-public class Cidade  implements Serializable{
-    
+
+@Entity(name = "cidade")
+public class Cidade implements Serializable {
     private static final long servialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    
-    
-   @ManyToOne
-    @JoinColumn(name = "estado_id")//Nome da tabela no banco que ferá o relacionamento
+
+    /**
+     * Relacionamento entre Cidade e Estado. Tipo de Relacionamento: ManyToOne,
+     * Muitas Cidades percetencem á um Estado.
+     * Coluna de assciação: "estado_id"
+     */
+    @ManyToOne
+    @JoinColumn(name = "estado_id")
     private Estado estado;
 
-    
-    
     public Cidade() {
     }
 
@@ -93,7 +100,5 @@ public class Cidade  implements Serializable{
         }
         return true;
     }
-    
-    
-    
+
 }

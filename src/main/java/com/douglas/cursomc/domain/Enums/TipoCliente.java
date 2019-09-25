@@ -1,19 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.douglas.cursomc.domain.Enums;
 
 /**
+ * Tipo de Cliente.
+ * <br/>Classe responsável por representar os Tipos de Clientes que nossos
+ * clientes podem assumir.
+ * <br/> &nbsp PESSOAFISICA = 1
+ * <br/> &nbsp PESSOAJURIDICA = 2
+ * <br/>Atributos:
+ * <br/> &nbsp cod : Integer
+ * <br/> &nbsp descricao : String Metodos: Getters and Setters
  *
- * @author douglas
+ * @see Cliente
+ * @author douglas eleuterio
+ * @version 0.2.0
  */
+
 public enum TipoCliente {
-    
+
     PESSOAFISICA(1, "Pessoa Física"),
     PESSOAJURIDICA(2, "Pessoa Jurídica");
-    
+
     private int cod;
     private String descricao;
 
@@ -30,13 +36,20 @@ public enum TipoCliente {
         return descricao;
     }
 
+    /**
+     * Metodo que retorna o tipo do Clienteno formato String. 
+     * O tipo do cliente é convertido e retornado na forma textual.
+     * @param cod
+     * @return tipoCliente (String)
+     * @exception Id Inválido
+     */
     //Recebendo o codigo e o objeto do tipo cliente.
-    public static TipoCliente toEnum(Integer cod){
-        if(cod == null){
+    public static TipoCliente toEnum(Integer cod) {
+        if (cod == null) {
             return null;
         }
-        for (TipoCliente x : TipoCliente.values()){
-            if (cod.equals(x.getCod())){
+        for (TipoCliente x : TipoCliente.values()) {
+            if (cod.equals(x.getCod())) {
                 return x;
             }
         }

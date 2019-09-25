@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.douglas.cursomc.domain;
 
 import com.douglas.cursomc.domain.Enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,39 +17,67 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 /**
- *
- * @author douglas
+ * Clientes do Sistema.
+ * Classe responsável por representar os Clientes que
+ *  serão persistidos no banco de dados.
+ * Nome da Tabela no Banco de Dados: cliente.
+ * Atributos:
+ *  id : Integer (Gerado automaticamente pelo banco)
+ *  nome : String
+ *  email: String
+ *  cpfOuCnpj: String
+ *  tipoCliente : TipoCliente
+ * Metodos: Getters and Setters, HashCode e Equals.
+ * Relacionamentos:
+ *      endereço: OneToMany um cliente possui muitos endereços.
+ *      pedido: OneToMany um cliente possui muitos pedidos.
+ * Instancia e inicializa uma lista de Endereços, Telefones e Pedidos.
+ * 
+ * @see TipoCliente
+ * @see Endereco
+ * @see Pedido
+ * @author douglas eleuterio
+ * @version 0.2.0
  */
-@Entity
-public class Cliente implements Serializable{
-    
+
+@Entity(name = "cliente")
+public class Cliente implements Serializable {
+
     private static final long servialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
     private String email;
     private String cpfOuCnpj;
     private Integer tipo;
-    
-     //O cliente pode serializar os endereços dele
+
+    /* Intancia e Inicializa uma lista de Endereços.
+     * O mapeamento foi definido na classe "Cliente".
+     */
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
-    
-    @ElementCollection 
+
+    /*
+     * Instancia e inicia um conjunto de telefones.
+     * Será construida uma tabela chamada Telefones no banco de dados
+     * A tabela telefones não terá identificador, será criada uma coluna chamada CLIENTE_ID.
+     * A chave estrangeria de cliente estará nessa tabela para fazer a junção do cliente ao telefone.
+     */
+    @ElementCollection
     @CollectionTable(name = "telefone")
     private Set<String> telefones = new HashSet<>();
 
-    /**
-     * Associação Cliente - Pedido. 1 - *
-     * Pedidos também necessita conhecer o cliente Bidirecional
-     * Não é permitido os pedidos serializar os clientes.
+
+    /* 
+     * Instancia e Inicializa uma lista de pedidos.
+     * O mapeamento foi definido na classe cliente.
      */
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
-    
-    
+
     //Construtores
     public Cliente() {
     }
@@ -67,7 +89,7 @@ public class Cliente implements Serializable{
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = tipo.getCod();
     }
-    
+
     //Getters and Setters
     public Integer getId() {
         return id;
@@ -140,6 +162,7 @@ public class Cliente implements Serializable{
         hash = 53 * hash + Objects.hashCode(this.id);
         return hash;
     }
+
     //Equals
     @Override
     public boolean equals(Object obj) {

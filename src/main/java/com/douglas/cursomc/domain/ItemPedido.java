@@ -1,7 +1,3 @@
-/**
- * Classe responsável por fazer a ligação entre Produto e Pedido.
- *  Informações Relevantes: Não possui ID proprio, a identificação dela se dá pela junção de Pedido e Produto.
- */
 package com.douglas.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,15 +7,32 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
         
 /**
+ * Itens no Pedido.
+ * <br/>Classe responsável por representar os Itens que compoe o Pedido, 
+ *  sendo persistidos no banco de dados.
+ * <br/>Aqui é realizado a junção entre Produto e Pedido.
+ * <br/>Tal abordagem foi utilizada para garantir que o preço do produto no pedido não se altere.
+ *      Caso o produto fosse relacionado diretamente no Pedido, após o fechamento
+ *      do pedido, sempre que o preço do produto sofrer alteração, o preço do produto
+ *      no pedido também seria alterado, caso o produto fosse excluido ou modificado,
+ *      essas alteraçõe seriam feitas em todos os pedidos a qual ele estivesse relacionado.
+ * <br/>Nome da Tabela no Banco de Dados: itemPedido.
+ * <br/>Atributos: 
+ *  <br/> &nbsp id : ItemPedidoPK - O id é a junção entre os ids de Pedido e Produto. 
+ *  <br/> &nbsp nome : String
+ * <br/>Metodos: Getters and Setters, HashCode e Equals.
+ * Instancia e inicializa ItemPedidoPK.
  *
- * @author douglas
- * @see Pedido
+ * @see ItemPedidoPK
  * @see Produto
+ * @author douglas eleuterio
+ * @version 0.2.0
  */
-@Entity
-public class ItemPedido implements Serializable {
 
+@Entity(name = "itemPedido")
+public class ItemPedido implements Serializable {
     private static final long serialVersionUID = 1L;
+
     //Chave composta contendo o produto e pedido.
     @JsonIgnore//Ignora a serialização. Item pedido não serializa ninguém.
     @EmbeddedId //Classe id embutido na classe auxiliar.

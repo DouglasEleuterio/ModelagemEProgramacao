@@ -1,28 +1,29 @@
-/*
- * Classe filha de Pagamento.
- * Especializada em pagamento com Cartão.
- * 
- */
 package com.douglas.cursomc.domain;
 
 import com.douglas.cursomc.domain.Enums.EstadoPagamento;
 import javax.persistence.Entity;
+
 /**
- *
- * @author douglas
+ * SubClasse de Pagamento.
+ * <br/>Classe responsável por representar os pagamentos com cartão, 
+ *  sendo persistidos no banco de dados.
+ * <br/>Em nosso sistema, cada pagamento (especialização) terá sua tabela no banco.
+ * <br/>Nome da Tabela no Banco de Dados: pagamentoComCartao.
+ * <br/>Atributos: 
+ *  <br/> &nbsp Integer : Número de Parcelas
+ * <br/>Metodos: Getters and Setters, HashCode e Equals.
  * @see Pagamento
+ * @author douglas eleuterio
+ * @version 0.2.0
  */
+
 @Entity
 public class PagamentoComCartao extends Pagamento{
-    
     //Estrategia de salvamento definido na superclasse
     private static final long servialVersionUID = 1L;
     
     private Integer numeroDeParcelas;
 
-    /**
-     * Construtor
-     */
     public PagamentoComCartao() {
     }
     //Construtor de subclasse já buscando os atributos da superclasse no construtor.
@@ -30,8 +31,6 @@ public class PagamentoComCartao extends Pagamento{
         super(id, estado, pedido);
         this.numeroDeParcelas = numeroDeParcelas;
     }
-    
-    //Getters and Setters
 
     public Integer getNumeroDeParcelas() {
         return numeroDeParcelas;

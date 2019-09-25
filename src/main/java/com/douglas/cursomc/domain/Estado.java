@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.douglas.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,10 +13,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.Entity;
 
 /**
+ * Estados da Federação. <br/>
+ * Classe responsável por representar os Estados Brasileiros que 
+ *  serão persistidas no banco de dados. <br/>
+ * Nome da Tabela no Banco de Dados: estado.<br/>
+ * Atributos: 
+ *  <br/> &nbsp id : Integer (Gerado automaticamente pelo banco) 
+ *  <br/> &nbsp nome : String <br/>
+ * Metodos: Getters and Setters, HashCode e Equals.<br/>
+ *  Relacionamento: <br/> 
+ *      &nbsp cidades: OneToMany, Muitas Cidades percetencem á um Estado.
+ * <br/>Instancia e inicializa uma lista de Cidades.
  *
- * @author douglas
+ * @see Cidade
+ * @author douglas eleuterio
+ * @version 0.2.0
  */
-@Entity
+
+@Entity(name = "estado")
 public class Estado implements Serializable{
     
     private static final long servialVersionUID = 1L;
@@ -31,7 +41,7 @@ public class Estado implements Serializable{
     
     
     @JsonIgnore //O estado não pode serializar suas cidades
-    @OneToMany(mappedBy = "estado")//ATRIBUTO que fez o mapeamento do outro lado.
+    @OneToMany(mappedBy = "estado")
     private List<Cidade> cidades = new ArrayList<>();
 
     

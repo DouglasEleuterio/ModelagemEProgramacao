@@ -1,3 +1,4 @@
+
 package com.douglas.cursomc.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,13 +17,7 @@ import com.douglas.cursomc.domain.Categoria;
  * @see CategoriaService
  * @see JpaRepository
  */
+
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 
-	/*
-	 * Interface que estende JpaRepository para fornecer acesso aos dados.
-	 * É passado o tipo de Obj. que deseja manipular e o tipo de dado do identificador.
-	 * Nesse caso Integer (Definido no ID da classe de dominio).
-	 * 
-	 */
-	
 }

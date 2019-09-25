@@ -1,16 +1,9 @@
-/*
- * Pagamento do pedido.
-
-*/
 package com.douglas.cursomc.domain;
 
 import com.douglas.cursomc.domain.Enums.EstadoPagamento;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -20,23 +13,36 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 /**
- * A forma de gravar dados de subclasses no banco de dados se da por duas estrategias.
- * No Nosso caso, as tabelas de pagamentos podem ficar da seguinte forma, ou, salvamos tudo em apenas uma tabela, tanto pagamento com boleto, tanto para pagamento em cartão ou uma tabela para cada.
- *  No caso de dados em uma unica tabela, será feita um "tabelão" com os dados do tipo de pagamento selecionado e os outros inseriremos nulo.
- *  No caso de tabela unica, ficará uma tabela para cada tipo de pagamento, que deverá se unida com Join.
- * Via de regra, poucos dados na tabela faz um tabelão/tabela unica ao contratio tabelas independentes.
- * 
- * @author douglas
- * 
+ * Pagamento dos Pedidos.
+ * <br/>Classe responsável por representar os Pagamentos dos Pedidos.
+ * <br/>Duas Particularidades devem ser observadas nessa classe.
+ * <br/> &nbsp Id - Necessitamos que o id do pagamento seja identico ao Id do Pedido.
+ * <br/> &nbsp Tabela no banco - Por se tratar de uma SuperClasse, necessitamos
+ *       gravar a tabela do banco, que será a junção da super com a sub classe.
+ *       Utilizamos a abordagem "JOINED" que criará uma tabela para cada tipo de pagamento.   
+ * <br/>Nome da Tabela no Banco de Dados: pagamento.
+ * <br/>Atributos: 
+ *  <br/> &nbsp id : Não gerado pela classe, o Id é copiado do id do pedido a ele associado. 
+ *  <br/> &nbsp nome : Estado - Representa o estado do Pagamento, podendo ser:
+ *        &nbsp &nbsp  PENDENTE = 1, QUITADO = 2 ou CANCELADO = 3. 
+ *        &nbsp O Estado do Pagamento é representado na forma de String.  
+ * <br/>Metodos: Getters and Setters, HashCode e Equals.
+ * Instancia e inicializa ItemPedidoPK.
+ *
+ * @see EstadoPagamento
+ * @see Pedido
+ * @author douglas eleuterio
+ * @version 0.2.0
  */
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED) //Uma tabela para cada
+
+@Entity(name = "pagamento")
+@Inheritance(strategy = InheritanceType.JOINED) //Uma tabela para cada subclasse
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE) //Tabela unica
 public abstract class  Pagamento implements Serializable{
     private static final long servialVersionUID = 1L;
 
-    //Deixaremos o Id do pagamento identico ao id do pedido 
-    @Id
+    
+    @Id //Deixaremos o Id do pagamento identico ao id do pedido 
     private Integer id;
     private Integer estado; //Enum {Pendente, Quitado e Cancelado}
     
@@ -75,10 +81,18 @@ public abstract class  Pagamento implements Serializable{
         this.id = id;
     }
 
+    /**
+     * Responsável por converter o estado para forma de String.
+     * @return Pendente, Quitado ou Cancelado.
+     */
     public EstadoPagamento getEstado() {
         return EstadoPagamento.toEnum(estado);
     }
 
+    /**
+     * Responsável por converter o estado para forma de String.
+     * @param estado 
+     */
     public void setEstado(EstadoPagamento estado) {
         this.estado = estado.getCod();
     }
