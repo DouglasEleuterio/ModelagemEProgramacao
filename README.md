@@ -46,84 +46,67 @@ These instructions will get you a copy of the project up and running on your loc
 ### Instalando
 
 Após realizado o Download ou Clone do projeto os seguintes passos devem ser efetuados.
-1 - Empacotar o código compilado. 
-    Acesse a pasta do projeto "ModelagemEProgramacao" e execute o código (Necessita do Maven instalado)
-    ```
-    mvn -package
-    ``` 
-    Após realizar o procedimento, será criado o arquivo JAR do projeto.
-    Acesse a pasta que foi criada que por padrão estará em "ModelagemEProgramacao/target/"
+<ol>
 
-2 - Instalar o pacote no repositório local.
-    Dentro da pasta "target" execute o seguinte comando.
-    ```
-    java -jar cursomc-0.0.1-SNAPSHOT.jar
-    ```
+<li> Empacotar o código compilado. </li>
   
+Acesse a pasta do projeto "ModelagemEProgramacao" e execute o código (Necessita do Maven instalado).
+  
+```
+mvn -package
+``` 
+  
+Após realizar o procedimento, será criado o arquivo JAR do projeto.
+  
+Acesse a pasta que foi criada, que por padrão, estará em "~/ModelagemEProgramacao/target/".
+
+<li> Executar o Projeto </li>
+
+Dentro da pasta "target" execute o seguinte comando.
+
+```
+java -jar cursomc-0.0.1-SNAPSHOT.jar
+```
+</ol> 
 
 ### Acessando os EndPoints
 
-And repeat
+Após realizar os procedimentos mencionados acima os EndPoints estarão dispoíveis.
 
-```
-until finished
-```
+São 3 EndPoints disponíveis:
 
-End with an example of getting some data out of the system or using it for a little demo
+<ul> 
+  <li> Categorias </li>
+  
+    http://localhost:8080/categorias/1
+    
+  <li> Clientes </li>  
+  
+    http://localhost:8080/clientes/1
+    
+  <li> Pedidos </li>
+  
+    http://localhost:8080/pedidos/1
+    
+</ul>
 
-## Running the tests
 
-Explain how to run the automated tests for this system
 
-### Break down into end to end tests
+## Desenvolvimento
+Construido com base no curso do Prof. Acelino Alves 
 
-Explain what these tests test and why
+Douglas Eleutério Ferreira
+Graduando em Engenharia de Software pela UniCesumar 2019 - 2022
 
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Douglas Eleutério** - *Curso de Modelagem Conceitual* - [PurpleBooth](https://github.com/DouglasEleuterio)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+Este Projeto está licenciado nos termos da MIT License - veja sobre em [LICENSE.md](LICENSE.md) 
 
 
 Template Adaptado do modelo disponível em
