@@ -42,81 +42,71 @@ These instructions will get you a copy of the project up and running on your loc
 <li>IDE de sua preferencia. Foi utilizado Spring Tools Suite e Netbeans durante o desenvolvimento.</li>
 </ul>
 
+
+### Instalando
+
+Após realizado o Download ou Clone do projeto os seguintes passos devem ser efetuados.
+<ol>
+
+<li> Empacotar o código compilado. </li>
+  
+Acesse a pasta do projeto "ModelagemEProgramacao" e execute o código (Necessita do Maven instalado).
+  
 ```
-Give examples
-```
+mvn -package
+``` 
+  
+Após realizar o procedimento, será criado o arquivo JAR do projeto.
+  
+Acesse a pasta que foi criada, que por padrão, estará em "~/ModelagemEProgramacao/target/".
 
-### Installing
+<li> Executar o Projeto </li>
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+Dentro da pasta "target" execute o seguinte comando.
 
 ```
-Give an example
+java -jar cursomc-0.0.1-SNAPSHOT.jar
 ```
+</ol> 
 
-### And coding style tests
+### Acessando os EndPoints
 
-Explain what these tests test and why
+Após realizar os procedimentos mencionados acima os EndPoints estarão dispoíveis.
 
-```
-Give an example
-```
+São 3 EndPoints disponíveis:
 
-## Deployment
+<ul> 
+  <li> Categorias </li>
+  
+    http://localhost:8080/categorias/1
+    
+  <li> Clientes </li>  
+  
+    http://localhost:8080/clientes/1
+    
+  <li> Pedidos </li>
+  
+    http://localhost:8080/pedidos/1
+    
+</ul>
 
-Add additional notes about how to deploy this on a live system
 
-## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+## Desenvolvimento
+Construido com base no curso do Prof. Acelino Alves 
 
-## Contributing
+Douglas Eleutério Ferreira
+Graduando em Engenharia de Software pela UniCesumar 2019 - 2022
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Douglas Eleutério** - *Curso de Modelagem Conceitual* - [PurpleBooth](https://github.com/DouglasEleuterio)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+Este Projeto está licenciado nos termos da MIT License - veja sobre em [LICENSE.md](LICENSE.md) 
 
 
 Template Adaptado do modelo disponível em
