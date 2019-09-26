@@ -42,19 +42,26 @@ These instructions will get you a copy of the project up and running on your loc
 <li>IDE de sua preferencia. Foi utilizado Spring Tools Suite e Netbeans durante o desenvolvimento.</li>
 </ul>
 
-```
-Give examples
-```
 
-### Installing
+### Instalando
 
-A step by step series of examples that tell you how to get a development env running
+Após realizado o Download ou Clone do projeto os seguintes passos devem ser efetuados.
+1 - Empacotar o código compilado. 
+    Acesse a pasta do projeto "ModelagemEProgramacao" e execute o código (Necessita do Maven instalado)
+    ```
+    mvn -package
+    ``` 
+    Após realizar o procedimento, será criado o arquivo JAR do projeto.
+    Acesse a pasta que foi criada que por padrão estará em "ModelagemEProgramacao/target/"
 
-Say what the step will be
+2 - Instalar o pacote no repositório local.
+    Dentro da pasta "target" execute o seguinte comando.
+    ```
+    java -jar cursomc-0.0.1-SNAPSHOT.jar
+    ```
+  
 
-```
-Give the example
-```
+### Acessando os EndPoints
 
 And repeat
 
