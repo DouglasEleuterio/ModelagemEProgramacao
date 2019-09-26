@@ -12,8 +12,10 @@ import com.douglas.cursomc.domain.Categoria;
 import com.douglas.cursomc.service.CategoriaService;
 
 /**
- * Classe da Ponta da Arquitetura MVC.
- * A responsábilidade da classe é comunicar-se com o FRONT-END.
+ * Classe da Ponta na Arquitetura MVC.
+ * <br/>A responsábilidade da classe é disponibilizar um EndPoint para acesso.
+ * <br/>Endereço: www.site.com/categorias
+ * <br/>Metodo Get: www.site.com/{id}
  * Passando-lhe os dados, erros, filtros, exceções, etc provenientes da classe de serviço.
  * O serviço será acessado através do endereço "www.site.com"/categorias
  *
