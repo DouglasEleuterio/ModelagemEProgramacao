@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.douglas.cursomc.domain.Categoria;
 import com.douglas.cursomc.service.CategoriaService;
+import java.net.URI;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  * Classe da Ponta na Arquitetura MVC.
@@ -51,5 +54,19 @@ public class CategoriaResource {
         Categoria obj = service.buscar(id);
         return ResponseEntity.ok().body(obj);//Retornando a resposta ao Serviço
     }
-
+    
+    /**
+     * Recurso para salvar categoria no banco de dados.
+     * Após salvar a nova categoria, enviamos a URI nova como resposta.
+     * Pegamos o id do novo objeto e setamos na URI de resposta.
+     * @param obj - Objeto do tipo Categoria
+     * @return Endereço URI do novo objeto.
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> insert(@RequestBody Categoria obj){
+        obj = service.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
+    }
 }
