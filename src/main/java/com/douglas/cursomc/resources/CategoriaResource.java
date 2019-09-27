@@ -1,6 +1,5 @@
 package com.douglas.cursomc.resources;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.douglas.cursomc.domain.Categoria;
 import com.douglas.cursomc.service.CategoriaService;
+
 import java.net.URI;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,11 +18,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
  * Classe da Ponta na Arquitetura MVC.
  * <br/>A responsábilidade da classe é disponibilizar um EndPoint para acesso.
  * <br/>Endereço: www.site.com/categorias
- * <br/>Metodo Get: www.site.com/{id}
- * Passando-lhe os dados, erros, filtros, exceções, etc provenientes da classe de serviço.
- * O serviço será acessado através do endereço "www.site.com"/categorias
+ * <br/>Metodo Get: www.site.com/{id} Passando-lhe os dados, erros, filtros,
+ * exceções, etc provenientes da classe de serviço. O serviço será acessado
+ * através do endereço "www.site.com"/categorias
  *
- * @author Douglas Eleutério - Graduando em Engenharia de Software pela Unicesumar 2019-2023
+ * @author Douglas Eleutério - Graduando em Engenharia de Software pela
+ * Unicesumar 2019-2023
  * @version 0.0.1
  * @since 30/07/2019
  */
@@ -34,17 +35,18 @@ public class CategoriaResource {
     private CategoriaService service;
 
     /**
-     * O acesso a dados se dá atraves do Id passado pelo navegador
-     * O Controlador espera encontrar o "id" do html com nome de id.
-     * O Spring faz a leitura dos Ids do HTML através da anotação @PathVariable
+     * O acesso a dados se dá atraves do Id passado pelo navegador O Controlador
+     * espera encontrar o "id" do html com nome de id. O Spring faz a leitura
+     * dos Ids do HTML através da anotação @PathVariable
      *
-     * Erros de resposta
-     * O controlador REST não costuma tratar os erros diretamente na Classe
-     * Para tratar os Erros faremos uso do Handler
-     * Handler é um objeto especial que intercepta a resposta e envia o retorno adequado.
+     * Erros de resposta O controlador REST não costuma tratar os erros
+     * diretamente na Classe Para tratar os Erros faremos uso do Handler Handler
+     * é um objeto especial que intercepta a resposta e envia o retorno
+     * adequado.
      *
      * @param id - Espera o id do objeto que deseja find.
-     * @return ResponseEntity - retornará um objeto do tipo ResponseEntity que encapsula várias iinformações de resposta HTTP para o serviço REST.
+     * @return ResponseEntity - retornará um objeto do tipo ResponseEntity que
+     * encapsula várias iinformações de resposta HTTP para o serviço REST.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> find(@PathVariable Integer id) {
@@ -54,31 +56,46 @@ public class CategoriaResource {
         Categoria obj = service.find(id);
         return ResponseEntity.ok().body(obj);//Retornando a resposta ao Serviço
     }
-    
+
     /**
-     * Recurso para salvar categoria no banco de dados.
-     * Após salvar a nova categoria, enviamos a URI nova como resposta.
-     * Pegamos o id do novo objeto e setamos na URI de resposta.
+     * Recurso para salvar categoria no banco de dados. Após salvar a nova
+     * categoria, enviamos a URI nova como resposta. Pegamos o id do novo objeto
+     * e setamos na URI de resposta.
+     *
      * @param obj - Objeto do tipo Categoria
      * @return Endereço URI do novo objeto.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody Categoria obj){
+    public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
     /**
      * Recurso que prove atualização do Objeto no banco.
+     *
      * @param obj - Categoria
      * @param id - id da categoria que deseja alterar
      * @return - Retorna corpo vazio.
      */
-    @RequestMapping (value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> update (@RequestBody Categoria obj, @PathVariable Integer id){
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
         obj.setId(id);
-        obj = service.update(obj) ;
+        obj = service.update(obj);
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Recurso que prove a deleção da Categoria
+     *
+     * @param id - id passado na requisição
+     * @return - Retorna vazio.
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

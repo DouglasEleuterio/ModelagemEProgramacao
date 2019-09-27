@@ -3,7 +3,7 @@ package com.douglas.cursomc.resources.exceptions;
 import java.io.Serializable;
 
 /**
- * Classe auxiliar para tratamento do erro que sera utilizada pelo handler
+ * Classe auxiliar para tratamento do erro que sera utilizada pelo handler.
  * Ela cria o padrao de resposta com: Código de status, mensagem de erro e timeStamp do erro
  * @see ResourceExceptionHandler
  */
