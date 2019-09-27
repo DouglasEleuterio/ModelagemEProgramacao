@@ -38,7 +38,7 @@ public class PedidoResource {
      * Para tratar os Erros faremos uso do Handler
      * Handler é um objeto especial que intercepta a resposta e envia o retorno adequado.
      *
-     * @param id - Espera o id do objeto que deseja buscar.
+     * @param id - Espera o id do objeto que deseja find.
      * @return ResponseEntity - retornará um objeto do tipo ResponseEntity que encapsula várias iinformações de resposta HTTP para o serviço REST.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -46,7 +46,7 @@ public class PedidoResource {
         /*
          * O tipo de retorno ResponseEntity ecapsula a resposta e adiciona várias funcionalidades ao retorno.
          */
-        Pedido obj = service.buscar(id);
+        Pedido obj = service.find(id);
         return ResponseEntity.ok().body(obj);//Retornando a resposta ao Serviço
     }
 

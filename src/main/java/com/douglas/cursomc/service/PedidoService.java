@@ -34,7 +34,7 @@ public class PedidoService {
 	 * @see ObjectNotFoundException
 	 * @exception ObjectNotFoundException - Será lançado caso não localize o obj com id informado.
 	 */
-	public Pedido buscar(Integer id) {
+	public Pedido find(Integer id) {
 		Optional<Pedido> obj = repo.findById(id);
 		return 	obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto Não Encontrado!	Id: " +id+" , Tipo: "+PedidoService.class.getName()

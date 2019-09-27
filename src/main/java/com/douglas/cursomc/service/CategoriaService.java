@@ -38,7 +38,7 @@ public class CategoriaService {
      * @exception ObjectNotFoundException - Será lançado caso não localize o obj
      * com id informado.
      */
-    public Categoria buscar(Integer id) {
+    public Categoria find(Integer id) {
         Optional<Categoria> obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto Não Encontrado!	Id: " + id + " , Tipo: " + CategoriaService.class.getName()
@@ -53,6 +53,16 @@ public class CategoriaService {
      */
     public Categoria insert(Categoria obj) {
         obj.setId(null);
+        return repo.save(obj);
+    }
+
+    /**
+     * Metodo que altera o objeto enviado na requisição
+     * @param obj - Objeto do tipo Categoria
+     * @return Retorna um objeto do tipo Categoria.
+     */
+    public Categoria update(Categoria obj) {
+        find(obj.getId());
         return repo.save(obj);
     }
 }

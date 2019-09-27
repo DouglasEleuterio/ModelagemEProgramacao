@@ -43,7 +43,7 @@ public class CategoriaResource {
      * Para tratar os Erros faremos uso do Handler
      * Handler é um objeto especial que intercepta a resposta e envia o retorno adequado.
      *
-     * @param id - Espera o id do objeto que deseja buscar.
+     * @param id - Espera o id do objeto que deseja find.
      * @return ResponseEntity - retornará um objeto do tipo ResponseEntity que encapsula várias iinformações de resposta HTTP para o serviço REST.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -51,7 +51,7 @@ public class CategoriaResource {
         /*
          * O tipo de retorno ResponseEntity ecapsula a resposta e adiciona várias funcionalidades ao retorno.
          */
-        Categoria obj = service.buscar(id);
+        Categoria obj = service.find(id);
         return ResponseEntity.ok().body(obj);//Retornando a resposta ao Serviço
     }
     
@@ -68,5 +68,17 @@ public class CategoriaResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+    /**
+     * Recurso que prove atualização do Objeto no banco.
+     * @param obj - Categoria
+     * @param id - id da categoria que deseja alterar
+     * @return - Retorna corpo vazio.
+     */
+    @RequestMapping (value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> update (@RequestBody Categoria obj, @PathVariable Integer id){
+        obj.setId(id);
+        obj = service.update(obj) ;
+        return ResponseEntity.noContent().build();
     }
 }

@@ -34,7 +34,7 @@ public class ClienteService {
 	 * @see ObjectNotFoundException
 	 * @exception ObjectNotFoundException - Será lançado caso não localize o obj com id informado.
 	 */
-	public Cliente buscar(Integer id) {
+	public Cliente find(Integer id) {
 		Optional<Cliente> obj = repo.findById(id);
 		return 	obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto Não Encontrado!	Id: " +id+" , Tipo: "+ClienteService.class.getName()
