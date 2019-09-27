@@ -2,11 +2,9 @@ package com.douglas.cursomc.resources;
 
 import com.douglas.cursomc.dto.CategoriaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.douglas.cursomc.domain.Categoria;
 import com.douglas.cursomc.service.CategoriaService;
@@ -15,7 +13,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
@@ -120,6 +117,29 @@ public class CategoriaResource {
         //retornar o objeto do tipo stream para lista
         //Assim convertemos uma lista para outra lista
         List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDto);
+    }
+
+    /**
+     * <h2>Serviço de páginação.</h2>
+     * <br/>Evitando carregamento de todas as páginas que poderão existir, que ocasionaria processamento exagerado caso
+     * exista muitos dados.
+     * <br/>
+     * <p>Exemplo: http://localhost:8080/categorias/page?page=0&linesPerPage=2&ordeBy=id&direction=ASC </p>
+     * @param page - Número da página (Inicia-se em 0)
+     * @param linesPerPage - Quantidade de Resultados por página
+     * @param orderBy - Qual dado deseja ordenar? (Id ou Nome)
+     * @param direction - Qual ordenação dos dados crescente-ASC ou decrescente-DESC
+     * @return
+     */
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public ResponseEntity<Page<CategoriaDTO>> findPage(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+            @RequestParam(value = "direction", defaultValue = "ASC")  String direction) {
+        Page<Categoria> list = service.findPage(page,linesPerPage,orderBy,direction);
+        Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));
         return ResponseEntity.ok().body(listDto);
     }
 

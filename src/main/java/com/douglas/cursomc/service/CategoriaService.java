@@ -6,6 +6,9 @@ import java.util.Optional;
 import com.douglas.cursomc.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.douglas.cursomc.domain.Categoria;
@@ -93,5 +96,18 @@ public class CategoriaService {
      */
     public List<Categoria> findAll() {
         return repo.findAll();
+    }
+
+    /**
+     * Metodo de Paginação de dados.
+     * @param page - número da página
+     * @param linesPerPage - Quantos resultados deseja por página.
+     * @param orderBy - Ordenar por qual campo? Nome ou Id ?
+     * @param direction - Deseja os or ordem crescente-ASC ou decrescente-DESC
+     * @return
+     */
+    public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        return repo.findAll(pageRequest);
     }
 }
