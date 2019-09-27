@@ -10,12 +10,13 @@ import com.douglas.cursomc.domain.Categoria;
  * Foi utilizada a interface JpaRepository, tal interface manipula o acesso aos dados e encapsula as operações.
  * As classes do pacote Repositories são as "ultimas" classes quando observamos a arquitetura de Camada MVC.
  * As classes são responsáveis por acessar o banco de dados, realizar as alterações devidas.
- * @version 0.0.1
+ *
  * @author Douglas
- * @since 30/07/2019 
- * @see Categoria 
- * @see CategoriaService
+ * @version 0.0.1
+ * @see Categoria
+ * @see com.douglas.cursomc.service.CategoriaService
  * @see JpaRepository
+ * @since 30/07/2019
  */
 
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {

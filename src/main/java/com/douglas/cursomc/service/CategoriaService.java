@@ -1,5 +1,6 @@
 package com.douglas.cursomc.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.douglas.cursomc.service.exceptions.ObjectNotFoundException;
@@ -20,7 +21,6 @@ import com.douglas.cursomc.service.exceptions.DataIntegrityException;
  * ficará responsável apenas por "conversar" com o "FRONT-END".
  *
  * @author Douglas Eleutério
- *
  */
 @Service
 public class CategoriaService {
@@ -36,9 +36,9 @@ public class CategoriaService {
      * @param id - Receberá um id para realizar a busca do objeto.
      * @return Objeto do tipo categoria
      * @throws ObjectNotFoundException - Caso não localize o ID
+     * @throws ObjectNotFoundException - Será lançado caso não localize o obj
+     *                                 com id informado.
      * @see ObjectNotFoundException
-     * @exception ObjectNotFoundException - Será lançado caso não localize o obj
-     * com id informado.
      */
     public Categoria find(Integer id) {
         Optional<Categoria> obj = repo.findById(id);
@@ -84,5 +84,14 @@ public class CategoriaService {
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
         }
+    }
+
+    /**
+     * Metodo que retorna uma lista de Categorias
+     *
+     * @return Lista de Categorias
+     */
+    public List<Categoria> findAll() {
+        return repo.findAll();
     }
 }

@@ -1,5 +1,6 @@
 package com.douglas.cursomc.resources;
 
+import com.douglas.cursomc.dto.CategoriaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,9 @@ import com.douglas.cursomc.domain.Categoria;
 import com.douglas.cursomc.service.CategoriaService;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -38,7 +42,7 @@ public class CategoriaResource {
      * O acesso a dados se dá atraves do Id passado pelo navegador O Controlador
      * espera encontrar o "id" do html com nome de id. O Spring faz a leitura
      * dos Ids do HTML através da anotação @PathVariable
-     *
+     * <p>
      * Erros de resposta O controlador REST não costuma tratar os erros
      * diretamente na Classe Para tratar os Erros faremos uso do Handler Handler
      * é um objeto especial que intercepta a resposta e envia o retorno
@@ -77,7 +81,7 @@ public class CategoriaResource {
      * Recurso que prove atualização do Objeto no banco.
      *
      * @param obj - Categoria
-     * @param id - id da categoria que deseja alterar
+     * @param id  - id da categoria que deseja alterar
      * @return - Retorna corpo vazio.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -98,4 +102,25 @@ public class CategoriaResource {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    /**
+     * Recurso que retorna todas as categorias.
+     * Será retornado uma lista contendo todas as categorias
+     * Utilizado o Padrão DTO.
+     * Será retornado uma lista de CategoriaDTO
+     * @return Lista de Categorias.
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoriaDTO>> findAll() {
+        List<Categoria> list = service.findAll();
+        //Percorrendo a lista com Stream
+        // map - atribuir uma operação para cada elemento da lista
+        //cada elemento da lista tera o apelido de obj
+        //para cada elemento da lista 'obj'
+        //retornar o objeto do tipo stream para lista
+        //Assim convertemos uma lista para outra lista
+        List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDto);
+    }
+
 }

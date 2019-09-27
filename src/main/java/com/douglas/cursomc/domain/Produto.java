@@ -20,21 +20,21 @@ import javax.persistence.OneToMany;
 /**
  * Classe Produtos.
  * Responsável por representar os Produtos que
- *  serão persistidas no banco de dados.
+ * serão persistidas no banco de dados.
  * Nome da Tabela no Banco de Dados: produto.
  * Atributos:
- *  id : Integer (Gerado automaticamente pelo banco)
- *  nome : String
+ * id : Integer (Gerado automaticamente pelo banco)
+ * nome : String
  * Metodos: Getters and Setters, HashCode e Equals.
- *  Relacionamento: ManyToMany, Muitos Categoria percetencem á muitas Categorias;
- *  Ex: Categoria {Informatica, Eletronicos} - Produto{Mouse, Monitor}
+ * Relacionamento: ManyToMany, Muitos Categoria percetencem á muitas Categorias;
+ * Ex: Categoria {Informatica, Eletronicos} - Produto{Mouse, Monitor}
  * Instancia e inicializa uma lista de Pedidos, Categorias, ItemPedido.
  *
- * @see Pedido
- * @see Categoria
- * @see ItemPedido 
  * @author douglas eleuterio
  * @version 0.2.0
+ * @see Pedido
+ * @see Categoria
+ * @see ItemPedido
  */
 
 @Entity(name = "produto")
@@ -63,9 +63,9 @@ public class Produto implements Serializable {
     private List<Categoria> categorias = new ArrayList<>();
 
     /*
-     * Relacionamento entre Produto e Pedido, o relacionamento não será direto. 
+     * Relacionamento entre Produto e Pedido, o relacionamento não será direto.
      * O relacionamento acontecerá pela classe associativa ItemPedido.
-     * Dessa forma, resolvemos o problema do valor do produto no pedido ser mutável após fechamento do pedido.   
+     * Dessa forma, resolvemos o problema do valor do produto no pedido ser mutável após fechamento do pedido.
      * O Produto precisa conhecer o itens associados a ele.
      */
     @JsonIgnore //A classe produto não serializará os Itens do Pedido.
@@ -83,7 +83,7 @@ public class Produto implements Serializable {
     }
 
     /* O produto necessita conhecer os Pedidos associados a ele.
-     *   
+     *
      */
     @JsonIgnore // Não permite que Produto serialize Pedido
     public List<Pedido> getPedidos() {
@@ -157,10 +157,7 @@ public class Produto implements Serializable {
             return false;
         }
         final Produto other = (Produto) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
 }
