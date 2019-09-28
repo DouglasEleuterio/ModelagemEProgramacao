@@ -1,15 +1,18 @@
 package com.douglas.cursomc.resources;
 
 
+import com.douglas.cursomc.dto.ClienteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.douglas.cursomc.domain.Cliente;
 import com.douglas.cursomc.service.ClienteService;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Classe da Ponta da Arquitetura MVC.
@@ -49,5 +52,70 @@ public class ClienteResource {
         Cliente obj = service.find(id);
         return ResponseEntity.ok().body(obj);//Retornando a resposta ao Serviço
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id) {
+        Cliente obj = service.fromDto(objDto);
+        obj.setId(id);
+        obj = service.update(obj);
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Recurso que prove a deleção do Cliente
+     *
+     * @param id - id passado na requisição
+     * @return - Retorna vazio.
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Recurso que retorna todos os Clientes.
+     * Será retornado uma lista contendo todos os Clientes
+     * Utilizado o Padrão DTO.
+     * Será retornado uma lista de ClienteDTO
+     * @return Lista de Clientes.
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<ClienteDTO>> findAll() {
+        List<Cliente> list = service.findAll();
+        //Percorrendo a lista com Stream
+        // map - atribuir uma operação para cada elemento da lista
+        //cada elemento da lista tera o apelido de obj
+        //para cada elemento da lista 'obj'
+        //retornar o objeto do tipo stream para lista
+        //Assim convertemos uma lista para outra lista
+        List<ClienteDTO> listDto = list.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDto);
+    }
+
+    /**
+     * <h2>Serviço de páginação.</h2>
+     * <br/>Evitando carregamento de todas as páginas que poderão existir, que ocasionaria processamento exagerado caso
+     * exista muitos dados.
+     * <br/>
+     * <p>Exemplo: http://localhost:8080/Clientes/page?page=0&linesPerPage=2&ordeBy=id&direction=ASC </p>
+     * @param page - Número da página (Inicia-se em 0)
+     * @param linesPerPage - Quantidade de Resultados por página
+     * @param orderBy - Qual dado deseja ordenar? (Id ou Nome)
+     * @param direction - Qual ordenação dos dados crescente-ASC ou decrescente-DESC
+     * @return
+     */
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public ResponseEntity<Page<ClienteDTO>> findPage(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+            @RequestParam(value = "direction", defaultValue = "ASC")  String direction) {
+        Page<Cliente> list = service.findPage(page,linesPerPage,orderBy,direction);
+        Page<ClienteDTO> listDto = list.map(obj -> new ClienteDTO(obj));
+        return ResponseEntity.ok().body(listDto);
+    }
+
+
 
 }
