@@ -3,6 +3,7 @@ package com.douglas.cursomc.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.douglas.cursomc.dto.CategoriaDTO;
 import com.douglas.cursomc.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -109,5 +110,14 @@ public class CategoriaService {
     public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
+    }
+
+    /**
+     * Construindo um bojeto categoria a partir de um Objeto CategoriaDTO.
+     * @param objDto - Objeto do Tipo DTO
+     * @return Categoria - retornará um objeto do tipo Categoria.
+     */
+    public Categoria fromDto(CategoriaDTO objDto){
+        return new Categoria(objDto.getId(), objDto.getNome());
     }
 }

@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+
 /**
  * Classe da Ponta na Arquitetura MVC.
  * <br/>A responsábilidade da classe é disponibilizar um EndPoint para acesso.
@@ -62,12 +64,14 @@ public class CategoriaResource {
      * Recurso para salvar categoria no banco de dados. Após salvar a nova
      * categoria, enviamos a URI nova como resposta. Pegamos o id do novo objeto
      * e setamos na URI de resposta.
+     * Utilizando padrão DTO.
      *
-     * @param obj - Objeto do tipo Categoria
+     * @param objDto - Objeto do tipo CategoriaDTO
      * @return Endereço URI do novo objeto.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
+        Categoria obj = service.fromDto(objDto);
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -76,13 +80,15 @@ public class CategoriaResource {
 
     /**
      * Recurso que prove atualização do Objeto no banco.
+     * Utilizando padrão DTO.
      *
-     * @param obj - Categoria
+     * @param objDto - Categoria
      * @param id  - id da categoria que deseja alterar
      * @return - Retorna corpo vazio.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
+    public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id) {
+        Categoria obj = service.fromDto(objDto);
         obj.setId(id);
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
