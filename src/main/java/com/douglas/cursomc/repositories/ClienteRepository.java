@@ -12,8 +12,8 @@ import com.douglas.cursomc.domain.Cliente;
  * @version 0.0.1
  * @author Douglas
  * @since 30/07/2019 
- * @see Categoria 
- * @see CategoriaService
+ * @see Cliente
+ * @see com.douglas.cursomc.service.ClienteService
  * @see JpaRepository
  */
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {

@@ -3,6 +3,7 @@ package com.douglas.cursomc.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.douglas.cursomc.domain.Cliente;
 import com.douglas.cursomc.dto.CategoriaDTO;
 import com.douglas.cursomc.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,8 +72,9 @@ public class CategoriaService {
      * @return Retorna um objeto do tipo Categoria.
      */
     public Categoria update(Categoria obj) {
-        find(obj.getId());
-        return repo.save(obj);
+        Categoria newOBJ = find(obj.getId());
+        updateData(newOBJ, obj);
+        return repo.save(newOBJ);
     }
 
     /**
@@ -119,5 +121,15 @@ public class CategoriaService {
      */
     public Categoria fromDto(CategoriaDTO objDto){
         return new Categoria(objDto.getId(), objDto.getNome());
+    }
+
+    /**
+     * Metodo auxiliar para atualizar os dados do banco de dados.
+     *
+     * @param newOBJ - Novo objeto que virá da requisição
+     * @param obj - Objeto buscado no banco de dados.
+     */
+    private void updateData(Categoria newOBJ, Categoria obj) {
+        newOBJ.setNome(obj.getNome());
     }
 }

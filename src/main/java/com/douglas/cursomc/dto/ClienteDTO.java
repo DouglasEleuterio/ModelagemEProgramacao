@@ -12,6 +12,8 @@ import java.io.Serializable;
  * Nosso ClienteDTO não terá os mesmos atributos que nossa classe de dominio.
  * Isso por que, NOSSO CLIENTE NÃO PODE ALTERAR O CPFOUCNPJ.
  * Será incluido apenas id, nome e email do Cliente.
+ * Validação: nome - maior que 5 e menor que 120, não pode ser nulo.
+ *            email - e-mail válido, não pode se nulo
  */
 public class ClienteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -30,10 +32,10 @@ public class ClienteDTO implements Serializable {
      * Construtor que recebe um cliente e gera o DTO.
      * @return
      */
-    public ClienteDTO(Cliente cliente){
-        id = cliente.getId();
-        nome = cliente.getNome();
-        email = cliente.getEmail();
+    public ClienteDTO(Cliente obj){
+        id = obj.getId();
+        nome = obj.getNome();
+        email = obj.getEmail();
     }
 
     public Integer getId() {
