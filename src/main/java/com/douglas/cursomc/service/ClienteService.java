@@ -51,15 +51,17 @@ public class ClienteService {
     }
 
     /**
-     * Metodo que altera o objeto enviado na requisição.
+     * Metodo que altera um objeto salvo no banco de dados
      * <br/>Invocado o Metodo find para checar o id passado.
+     * Utiliza-se o metodo updateData para buscar buscar o objeto no banco e atualizalo.
      *
      * @param obj - Objeto do tipo Cliente
      * @return Retorna um objeto do tipo Cliente.
      */
     public Cliente update(Cliente obj) {
-        find(obj.getId());
-        return repo.save(obj);
+        Cliente newOBJ = find(obj.getId());
+        updateData(newOBJ, obj);
+        return repo.save(newOBJ);
     }
 
     /**
@@ -73,7 +75,7 @@ public class ClienteService {
         try {
             repo.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possível excluir um cliente que possui produtos");
+            throw new DataIntegrityException("Não é possível excluir porque há entidades relacionadas!");
         }
     }
 
@@ -107,6 +109,19 @@ public class ClienteService {
      * @return Cliente - retornará um objeto do tipo Cliente.
      */
     public Cliente fromDto(ClienteDTO objDto) {
-        throw new UnsupportedOperationException();
+        return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
     }
+
+    /**
+     * Metodo auxiliar para atualizar os dados do banco de dados.
+     * Não podemos alterar os como CpfOuCnpj do cliente existente.
+     *
+     * @param newOBJ - Novo objeto que virá da requisição
+     * @param obj - Objeto buscado no banco de dados.
+     */
+    private void updateData(Cliente newOBJ, Cliente obj) {
+        newOBJ.setNome(obj.getNome());
+        newOBJ.setEmail(obj.getEmail());
+    }
+
 }
