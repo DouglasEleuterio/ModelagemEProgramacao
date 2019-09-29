@@ -2,15 +2,19 @@ package com.douglas.cursomc.resources;
 
 
 import com.douglas.cursomc.dto.ClienteDTO;
+import com.douglas.cursomc.dto.ClienteNewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.douglas.cursomc.domain.Cliente;
 import com.douglas.cursomc.service.ClienteService;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -116,6 +120,24 @@ public class ClienteResource {
         return ResponseEntity.ok().body(listDto);
     }
 
+    /**
+     * Recurso para salvar categoria no banco de dados. Após salvar a nova
+     * categoria, enviamos a URI nova como resposta. Pegamos o id do novo objeto
+     * e setamos na URI de resposta.
+     * Utilizando padrão DTO.
+     *
+     * @param objDto - Objeto do tipo CategoriaDTO
+     * @return Endereço URI do novo objeto.
+     */
+    @Transactional
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
+        Cliente obj = service.fromDto(objDto);
+        obj = service.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
+    }
 
 
 }

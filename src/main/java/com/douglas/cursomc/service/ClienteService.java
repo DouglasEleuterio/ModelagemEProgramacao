@@ -3,8 +3,13 @@ package com.douglas.cursomc.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.douglas.cursomc.domain.Cidade;
 import com.douglas.cursomc.domain.Cliente;
+import com.douglas.cursomc.domain.Endereco;
+import com.douglas.cursomc.domain.Enums.TipoCliente;
 import com.douglas.cursomc.dto.ClienteDTO;
+import com.douglas.cursomc.dto.ClienteNewDTO;
+import com.douglas.cursomc.repositories.EnderecoRepository;
 import com.douglas.cursomc.service.exceptions.DataIntegrityException;
 import com.douglas.cursomc.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +36,8 @@ public class ClienteService {
 
     @Autowired //Injeção de Dependencia do Spring
     private ClienteRepository repo; // repo passa a ser o objeto instanciado, injetado e controlado pelo Spring para acessar a classe "Repository" para prover os dados.
-
+    @Autowired
+    EnderecoRepository enderecoRepository; //Salvar endereço do Cliente.
     /**
      * Nova implementação do JAVA 8
      * Caso o objeto com id não seja encontrado, será lançada nossa exceção personalizada.
@@ -112,16 +118,47 @@ public class ClienteService {
         return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
     }
 
+    public Cliente fromDto(ClienteNewDTO objDto) {
+        Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()));
+        Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
+        Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), objDto.getBairro(), objDto.getCep(),
+                cli, cid);
+        cli.getEnderecos().add(end);
+        cli.getTelefones().add(objDto.getTelefone1());
+        if (objDto.getTelefone2() != null) {
+            cli.getTelefones().add(objDto.getTelefone2());
+        }
+        if (objDto.getTelefone3() != null) {
+            cli.getTelefones().add(objDto.getTelefone3());
+        }
+        return cli;
+    }
+
     /**
      * Metodo auxiliar para atualizar os dados do banco de dados.
      * Não podemos alterar os como CpfOuCnpj do cliente existente.
      *
      * @param newOBJ - Novo objeto que virá da requisição
-     * @param obj - Objeto buscado no banco de dados.
+     * @param obj    - Objeto buscado no banco de dados.
      */
     private void updateData(Cliente newOBJ, Cliente obj) {
         newOBJ.setNome(obj.getNome());
         newOBJ.setEmail(obj.getEmail());
     }
+
+    /**
+     * Metodo que salva objeto do tipo Categoria no Banco de dados. Para
+     * garantir que o objeto é novo, é definido o id como null.
+     *
+     * @param obj - Objeto do Tipo Categoria
+     * @return Retorna objeto do tipo Categoria
+     */
+    public Cliente insert(Cliente obj) {
+        obj.setId(null);
+        obj = repo.save(obj);
+        enderecoRepository.saveAll(obj.getEnderecos());
+        return obj;
+    }
+
 
 }
