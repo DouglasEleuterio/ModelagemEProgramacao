@@ -1,6 +1,7 @@
 package com.douglas.cursomc.dto;
 
 import com.douglas.cursomc.domain.Cliente;
+import com.douglas.cursomc.service.validation.ClienteUpdate;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -15,6 +16,7 @@ import java.io.Serializable;
  * Validação: nome - maior que 5 e menor que 120, não pode ser nulo.
  *            email - e-mail válido, não pode se nulo
  */
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
