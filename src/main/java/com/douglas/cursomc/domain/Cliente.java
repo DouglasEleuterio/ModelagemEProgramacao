@@ -8,13 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 /**
  * Clientes do Sistema.
@@ -55,8 +49,10 @@ public class Cliente implements Serializable {
 
     /* Intancia e Inicializa uma lista de Endereços.
      * O mapeamento foi definido na classe "Cliente".
+     * Ao apagar um cliente, obrigátoriamente excluiremos os endereços associados e este cliente.
      */
-    @OneToMany(mappedBy = "cliente")
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL) //Toda operação que modificar um cliente, refletirá em casatada nos endereços.
     private List<Endereco> enderecos = new ArrayList<>();
 
     /*
