@@ -3,6 +3,7 @@ package com.douglas.cursomc.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.douglas.cursomc.domain.Cliente;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Classe responsável pelas operações no banco de dados.
@@ -24,5 +25,10 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	 * Nesse caso Integer (Definido no ID da classe de dominio).
 	 * 
 	 */
-	
+
+	/**
+	 * Realizando busca por e-mail.
+	 */
+	@Transactional(readOnly = true)
+	Cliente findByEmail(String email);
 }
