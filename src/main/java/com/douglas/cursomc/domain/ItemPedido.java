@@ -1,32 +1,33 @@
 package com.douglas.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-        
+
 /**
  * Itens no Pedido.
- * <br/>Classe responsável por representar os Itens que compoe o Pedido, 
- *  sendo persistidos no banco de dados.
+ * <br/>Classe responsável por representar os Itens que compoe o Pedido,
+ * sendo persistidos no banco de dados.
  * <br/>Aqui é realizado a junção entre Produto e Pedido.
  * <br/>Tal abordagem foi utilizada para garantir que o preço do produto no pedido não se altere.
- *      Caso o produto fosse relacionado diretamente no Pedido, após o fechamento
- *      do pedido, sempre que o preço do produto sofrer alteração, o preço do produto
- *      no pedido também seria alterado, caso o produto fosse excluido ou modificado,
- *      essas alteraçõe seriam feitas em todos os pedidos a qual ele estivesse relacionado.
+ * Caso o produto fosse relacionado diretamente no Pedido, após o fechamento
+ * do pedido, sempre que o preço do produto sofrer alteração, o preço do produto
+ * no pedido também seria alterado, caso o produto fosse excluido ou modificado,
+ * essas alteraçõe seriam feitas em todos os pedidos a qual ele estivesse relacionado.
  * <br/>Nome da Tabela no Banco de Dados: itemPedido.
- * <br/>Atributos: 
- *  <br/> &nbsp id : ItemPedidoPK - O id é a junção entre os ids de Pedido e Produto. 
- *  <br/> &nbsp nome : String
+ * <br/>Atributos:
+ * <br/> &nbsp id : ItemPedidoPK - O id é a junção entre os ids de Pedido e Produto.
+ * <br/> &nbsp nome : String
  * <br/>Metodos: Getters and Setters, HashCode e Equals.
  * Instancia e inicializa ItemPedidoPK.
  *
- * @see ItemPedidoPK
- * @see Produto
  * @author douglas eleuterio
  * @version 0.2.0
+ * @see ItemPedidoPK
+ * @see Produto
  */
 
 @Entity(name = "itemPedido")
@@ -54,7 +55,7 @@ public class ItemPedido implements Serializable {
         this.preco = preco;
     }
 
-    public Double getSubTotal(){
+    public Double getSubTotal() {
         return (preco - desconto) * quantidade;
     }
 
@@ -63,8 +64,16 @@ public class ItemPedido implements Serializable {
         return id.getPedido();
     }
 
+    public void setPedido(Pedido pedido) {
+        id.setPedido(pedido);
+    }
+
     public Produto getProduto() {
         return id.getProduto();
+    }
+
+    public void setProduto (Produto produto){
+        id.setProduto(produto);
     }
 
     public ItemPedidoPK getId() {

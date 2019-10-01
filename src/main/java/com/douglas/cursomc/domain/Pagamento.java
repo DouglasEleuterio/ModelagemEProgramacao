@@ -2,6 +2,8 @@ package com.douglas.cursomc.domain;
 
 import com.douglas.cursomc.domain.Enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Id;
@@ -38,6 +40,7 @@ import javax.persistence.OneToOne;
 @Entity(name = "pagamento")
 @Inheritance(strategy = InheritanceType.JOINED) //Uma tabela para cada subclasse
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE) //Tabela unica
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class  Pagamento implements Serializable{
     private static final long servialVersionUID = 1L;
 

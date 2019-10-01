@@ -1,6 +1,8 @@
 package com.douglas.cursomc.domain;
 
 import com.douglas.cursomc.domain.Enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import javax.persistence.Entity;
 
 /**
@@ -18,6 +20,7 @@ import javax.persistence.Entity;
  */
 
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento{
     //Estrategia de salvamento definido na superclasse
     private static final long servialVersionUID = 1L;

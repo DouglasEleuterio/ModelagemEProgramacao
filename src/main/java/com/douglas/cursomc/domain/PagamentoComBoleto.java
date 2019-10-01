@@ -2,6 +2,8 @@ package com.douglas.cursomc.domain;
 
 import com.douglas.cursomc.domain.Enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import java.util.Date;
 import javax.persistence.Entity;
 
@@ -22,6 +24,7 @@ import javax.persistence.Entity;
  */
 
 @Entity(name = "pagamentoComBoleto")
+@JsonTypeName("pagamentoComBoleto")
 public class PagamentoComBoleto extends Pagamento{
     private static final long servialVersionUID = 1L;
     

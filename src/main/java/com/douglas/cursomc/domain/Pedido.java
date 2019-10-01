@@ -38,7 +38,7 @@ import javax.persistence.OneToOne;
  * @see Pagamento
  * @see Cliente
  * @see Endereco
- * @see Itens
+ * @see ItemPedido
  * @author douglas eleuterio
  * @version 0.2.0
  */
