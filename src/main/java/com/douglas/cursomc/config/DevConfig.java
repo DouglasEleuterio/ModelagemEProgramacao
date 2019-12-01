@@ -29,6 +29,12 @@ public class DevConfig {
         return true;
     }
 
+    /**
+     * Quando rodarmos nosso sistema no Perfil DEV.
+     * A instancia de SmtpMailService será injetada pelo Framework.
+     * Dessa forma a mudança do Mock para o Email de verdade será transparente.
+     * @return SmtpEmailService.
+     */
     @Bean
     public EmailService emailService(){
         return new SmtpEmailService();

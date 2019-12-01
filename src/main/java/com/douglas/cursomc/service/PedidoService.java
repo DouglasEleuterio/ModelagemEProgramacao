@@ -49,6 +49,7 @@ public class PedidoService {
 
     @Autowired
     private EmailService emailService;
+
     /**
      * Nova implementação do JAVA 8
      * Caso o objeto com id não seja encontrado, será lançada nossa exceção personalizada.
