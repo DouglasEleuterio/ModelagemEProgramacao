@@ -66,6 +66,13 @@ public class PedidoService {
         ));
     }
 
+    /**
+     * Inserindo novo Pedido no sistema.
+     *
+     * @param obj
+     * @return
+     */
+    @Transactional
     public Pedido insert(Pedido obj) {
         obj.setId(null);
         obj.setInstante(new Date());
