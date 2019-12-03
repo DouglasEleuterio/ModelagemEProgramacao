@@ -1,5 +1,6 @@
 package com.douglas.cursomc.domain;
 
+import com.douglas.cursomc.domain.Enums.Perfil;
 import com.douglas.cursomc.domain.Enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.*;
 
 /**
@@ -49,6 +51,9 @@ public class Cliente implements Serializable {
     private String cpfOuCnpj;
     private Integer tipo;
 
+    @JsonIgnore // Nao deixaremos o senha ficar sendo recuperada, mesmo se tratando apenas do Hash dela.
+    private String senha;
+
     /* Intancia e Inicializa uma lista de Endereços.
      * O mapeamento foi definido na classe "Cliente".
      * Ao apagar um cliente, obrigátoriamente excluiremos os endereços associados e este cliente.
@@ -67,6 +72,14 @@ public class Cliente implements Serializable {
     @CollectionTable(name = "telefone")
     private Set<String> telefones = new HashSet<>();
 
+    /**
+     * Quando buscarmos o cliente do banco de dados, queremos que o Perfil seja retornardo também.
+     * Utilizaremos o Set para guarda-lo como uma coleção.
+     * Criamos a tabela 'PEFIS' no Banco de Dados.
+     */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "PERFIS")
+    private Set<Integer> perfis = new HashSet<>();
 
     /* 
      * Instancia e Inicializa uma lista de pedidos.
@@ -78,14 +91,17 @@ public class Cliente implements Serializable {
 
     //Construtores
     public Cliente() {
+        addPerfil(Perfil.CLIENTE);
     }
 
-    public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+    public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = (tipo==null) ? null : tipo.getCod();
+        this.senha = senha;
+        addPerfil(Perfil.CLIENTE);
     }
 
     //Getters and Setters
@@ -129,12 +145,32 @@ public class Cliente implements Serializable {
         this.tipo = tipo.getCod();
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public List<Endereco> getEnderecos() {
         return enderecos;
     }
 
     public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
+    }
+
+    /**
+     *
+     * @return Perfil
+     */
+    public Set<Perfil> getPerfis() {
+        return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+    }
+
+    public void addPerfil(Perfil perfil) {
+        perfis.add(perfil.getCod());
     }
 
     public Set<String> getTelefones() {

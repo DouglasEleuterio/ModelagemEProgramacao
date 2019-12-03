@@ -24,8 +24,8 @@ import java.util.List;
  * @version 0.0.1
  * @since 30/07/2019
  */
-@RestController //Controlador Rest
-@RequestMapping(value = "/produtos") //Respondendo a esse "endereço".
+@RestController
+@RequestMapping(value = "/produtos")
 public class ProdutoResource {
 
     @Autowired //Obj. injetado pelo Spring.
