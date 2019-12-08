@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * <h3>Configura as definições de CORS</h3>
+     * <p>As configurações de </p>
      * @return
      */
     @Bean

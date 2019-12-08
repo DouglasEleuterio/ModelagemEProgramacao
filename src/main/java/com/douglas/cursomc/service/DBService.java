@@ -19,7 +19,6 @@ public class DBService {
 
     @Autowired
     BCryptPasswordEncoder pe;
-
     @Autowired
     private CategoriaRepository categoriaRepository; //Injeção do repository para salvar os dados.
     @Autowired

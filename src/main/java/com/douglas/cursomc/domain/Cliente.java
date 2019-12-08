@@ -89,7 +89,10 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 
-    //Construtores
+    /**
+     * Todo cliente que for instanciado terá o perfíl de Cliente definido.
+     * Como nossa classe tem 2 construtores, foi definido o perfil nos 2 construtores.
+     */
     public Cliente() {
         addPerfil(Perfil.CLIENTE);
     }
