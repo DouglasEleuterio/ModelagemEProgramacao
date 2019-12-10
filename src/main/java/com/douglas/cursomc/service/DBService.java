@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class DBService {
 
     @Autowired
-    BCryptPasswordEncoder pe;
+    private BCryptPasswordEncoder pe;
     @Autowired
     private CategoriaRepository categoriaRepository; //Injeção do repository para salvar os dados.
     @Autowired

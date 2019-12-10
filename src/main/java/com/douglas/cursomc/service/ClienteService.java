@@ -114,7 +114,7 @@ public class ClienteService {
     }
 
     /**
-     * Construindo um bojeto cliente a partir de um Objeto ClienteDTO.
+     * Construindo um objeto cliente a partir de um Objeto ClienteDTO.
      *
      * @param objDto - Objeto do Tipo DTO
      * @return Cliente - retornará um objeto do tipo Cliente.
